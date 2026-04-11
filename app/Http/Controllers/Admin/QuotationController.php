@@ -33,23 +33,36 @@ class QuotationController extends Controller
     public function generate(Request $request)
     {
         $request->validate([
-            'product_ids'     => 'required|array',
-            'product_ids.*'   => 'exists:products,id',
-            'quotation_title' => 'nullable|string|max:255',
-            'client_name'     => 'nullable|string|max:255',
-            'client_address'  => 'nullable|string|max:500',
-            'client_phone'    => 'nullable|string|max:50',
-            'prepared_by'     => 'nullable|string|max:255',
+            'product_ids'       => 'required|array',
+            'product_ids.*'     => 'exists:products,id',
+            'quantities'        => 'nullable|array',
+            'prices'            => 'nullable|array',
+            'quotation_title'   => 'nullable|string|max:255',
+            'client_designation'=> 'nullable|string|max:255',
+            'client_name'       => 'nullable|string|max:255',
+            'client_address'    => 'nullable|string|max:500',
+            'client_phone'      => 'nullable|string|max:50',
+            'prepared_by'       => 'nullable|string|max:255',
         ]);
 
         $products  = \App\Models\Product::whereIn('id', $request->product_ids)->with('category')->get();
+        
+        // Map dynamic prices and quantities
+        $products->map(function($product) use ($request) {
+            $product->custom_quantity = $request->quantities[$product->id] ?? 1;
+            $product->custom_price = $request->prices[$product->id] ?? $product->price;
+            return $product;
+        });
+
         $settings  = \App\Models\GeneralSetting::first() ?? new \App\Models\GeneralSetting();
+        $termConditions = \App\Models\TermAndCondition::where('is_active', true)->get();
 
         // Auto-generate ref ID: Slope/Q-001/2026
         $lastId    = Quotation::max('id') ?? 0;
         $refId     = 'Slope/Q-' . str_pad($lastId + 1, 3, '0', STR_PAD_LEFT) . '/' . date('Y');
 
         $client = [
+            'designation' => $request->client_designation ?: 'The Managing Director',
             'name'    => $request->client_name    ?? '[Client Hospital/Center Name]',
             'address' => $request->client_address ?? '[Client Address]',
             'phone'   => $request->client_phone   ?? '[Client Phone]',
@@ -57,7 +70,7 @@ class QuotationController extends Controller
         $preparedBy = $request->prepared_by ?? ($settings->md_name ?? 'Managing Director');
 
         $pdf      = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.quotation_bulk',
-            compact('products', 'settings', 'client', 'preparedBy', 'refId'));
+            compact('products', 'settings', 'client', 'preparedBy', 'refId', 'termConditions'));
 
         $title    = $request->quotation_title ?: 'Quotation-' . date('Ymd-His');
         $fileName = 'quotation_' . time() . '.pdf';

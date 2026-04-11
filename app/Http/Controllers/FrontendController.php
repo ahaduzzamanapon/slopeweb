@@ -27,8 +27,9 @@ class FrontendController extends Controller
 
         $sliders = \App\Models\Slider::where('active', true)->orderBy('order')->get();
         $services = \App\Models\Service::where('active', true)->orderBy('order')->limit(4)->get();
+        $testimonials = \App\Models\Testimonial::where('active', true)->orderBy('order')->get();
 
-        return view('frontend.home', compact('settings', 'categories', 'featuredProducts', 'sliders', 'services'));
+        return view('frontend.home', compact('settings', 'categories', 'featuredProducts', 'sliders', 'services', 'testimonials'));
     }
     public function productsIndex(Request $request)
     {

@@ -6,20 +6,32 @@
     <section class="relative bg-slate-900 overflow-hidden min-h-screen flex items-center">
         <!-- Video Background -->
         <div class="absolute inset-0 z-0">
-            <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                <source src="{{ asset('frontend/videos/hero-video.mp4') }}" type="video/mp4">
-            </video>
+            @if(!empty($settings->hero_video))
+                <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                    <source src="{{ asset('storage/' . $settings->hero_video) }}" type="video/mp4">
+                    <source src="{{ asset('storage/' . $settings->hero_video) }}" type="video/webm">
+                </video>
+            @elseif(!empty($settings->hero_image))
+                <img src="{{ str_starts_with($settings->hero_image, 'http') ? $settings->hero_image : asset('storage/' . $settings->hero_image) }}" alt="Hero Background" class="w-full h-full object-cover">
+            @else
+                <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                    <source src="{{ asset('frontend/videos/hero-video.mp4') }}" type="video/mp4">
+                </video>
+            @endif
             <div class="absolute inset-0 bg-gradient-to-tr from-slate-900 via-slate-900/40 to-transparent"></div>
         </div>
 
         <div class="container mx-auto px-4 relative z-10 py-32">
             <div class="max-w-4xl fade-up">
                 <h1 class="text-6xl md:text-8xl font-display font-extrabold text-white mb-8 leading-[1.1] tracking-tight">
-                    Total <span class="text-gradient">Hospital</span> <br>Solution
+                    @if(!empty($settings->hero_title))
+                        {!! nl2br(e($settings->hero_title)) !!}
+                    @else
+                        Total <span class="text-gradient">Hospital</span> <br>Solution
+                    @endif
                 </h1>
                 <p class="text-xl md:text-2xl text-slate-300 mb-12 max-w-2xl font-light leading-relaxed">
-                    Elevating healthcare through cutting-edge medical technology and diagnostics. Precision in every device,
-                    excellence in every service.
+                    {{ $settings->hero_description ?? 'Elevating healthcare through cutting-edge medical technology and diagnostics. Precision in every device, excellence in every service.' }}
                 </p>
                 <div class="flex flex-wrap gap-6">
                     <a href="{{ route('contact') }}"
@@ -102,48 +114,38 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Testimonial 1 -->
-                <div
-                    class="glass p-12 rounded-[3.5rem] relative shadow-2xl border border-white/50 fade-up delay-100 group hover:shadow-primary/5 transition-all duration-700">
-                    <div
-                        class="absolute top-10 right-12 text-7xl text-primary/5 font-serif group-hover:text-primary/10 transition-colors">
-                        "</div>
-                    <div class="flex items-center gap-6 mb-10">
-                        <div
-                            class="w-20 h-20 rounded-2xl overflow-hidden shadow-lg transform -rotate-3 group-hover:rotate-0 transition-transform">
-                            <img src="https://i.pravatar.cc/150?u=1" alt="avatar" class="w-full h-full object-cover">
+                @forelse($testimonials ?? [] as $index => $testimonial)
+                    <div class="glass p-12 rounded-[3.5rem] relative shadow-2xl border border-white/50 fade-up delay-{{ ($index % 3 + 1) * 100 }} group hover:shadow-primary/5 transition-all duration-700">
+                        <div class="absolute top-10 right-12 text-7xl text-primary/5 font-serif group-hover:text-primary/10 transition-colors">"</div>
+                        <div class="flex items-center gap-6 mb-10">
+                            <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-lg transform {{ $index % 2 == 0 ? '-rotate-3' : 'rotate-3' }} group-hover:rotate-0 transition-transform">
+                                @if($testimonial->avatar)
+                                    <img src="{{ str_starts_with($testimonial->avatar, 'http') ? $testimonial->avatar : asset('storage/' . $testimonial->avatar) }}" alt="{{ $testimonial->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full bg-primary/10 flex items-center justify-center text-primary text-3xl font-bold">
+                                        {{ strtoupper(substr($testimonial->name, 0, 1)) }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-xl">{{ $testimonial->name }}</h4>
+                                <p class="text-primary font-medium text-sm">{{ $testimonial->title }}</p>
+                                <div class="mt-2 flex text-yellow-500 text-sm tracking-widest gap-0.5">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <span class="{{ $i <= $testimonial->rating ? 'opacity-100' : 'opacity-30 text-slate-300' }}">★</span>
+                                    @endfor
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-xl">Dr. Ahmed Zubair</h4>
-                            <p class="text-primary font-medium text-sm">Director, Central Hospital</p>
-                        </div>
+                        <p class="text-slate-600 text-xl italic font-light leading-relaxed">
+                            "{{ $testimonial->quote }}"
+                        </p>
                     </div>
-                    <p class="text-slate-600 text-xl italic font-light leading-relaxed">
-                        "Slope provided us with a complete diagnostic setup within record time. Their commitment to quality
-                        and post-sale service is unmatched in the industry."
-                    </p>
-                </div>
-                <!-- Testimonial 2 -->
-                <div
-                    class="glass p-12 rounded-[3.5rem] relative shadow-2xl border border-white/50 fade-up delay-200 group hover:shadow-primary/5 transition-all duration-700">
-                    <div
-                        class="absolute top-10 right-12 text-7xl text-primary/5 font-serif group-hover:text-primary/10 transition-colors">
-                        "</div>
-                    <div class="flex items-center gap-6 mb-10">
-                        <div
-                            class="w-20 h-20 rounded-2xl overflow-hidden shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform">
-                            <img src="https://i.pravatar.cc/150?u=2" alt="avatar" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-xl">Engr. Salim Raza</h4>
-                            <p class="text-primary font-medium text-sm">Head of Procurement, Medicare</p>
-                        </div>
+                @empty
+                    <div class="col-span-1 border border-dashed border-slate-300 rounded-3xl p-10 text-center text-slate-500 font-light">
+                        No success stories found.
                     </div>
-                    <p class="text-slate-600 text-xl italic font-light leading-relaxed">
-                        "The x-ray machines from DRGEM and the diagnostic panels have been performing flawlessly. Slope is
-                        our go-to partner for all medical technology."
-                    </p>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>

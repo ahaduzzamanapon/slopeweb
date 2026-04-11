@@ -13,8 +13,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->orderBy('order')->paginate(10);
-        return view('admin.products.index', compact('products'));
+        $products = Product::with('category')->orderBy('order')->paginate(50);
+        $terms = \App\Models\TermAndCondition::where('is_active', true)->get();
+        return view('admin.products.index', compact('products', 'terms'));
     }
 
     public function create()

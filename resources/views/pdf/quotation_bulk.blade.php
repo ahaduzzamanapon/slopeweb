@@ -139,7 +139,7 @@
 
     <div class="info-section">
         <strong>To,</strong><br>
-        The Managing Director<br>
+        {{ $client['designation'] }}<br>
         {{ $client['name'] }}<br>
         {{ $client['address'] }}<br>
         {{ $client['phone'] }}
@@ -164,13 +164,14 @@
             <tr>
                 <th width="30">S/N</th>
                 <th>Product Details</th>
-                <th>Price</th>
+                <th width="40">Qty</th>
+                <th width="70">Unit<br>Price</th>
+                <th width="80">Total<br>Price</th>
                 <th>Remark</th>
             </tr>
         </thead>
         <tbody>
             @foreach($products as $index => $product)
-            @php $grandTotal += $product->price; @endphp
             <tr>
                 <td align="center">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
                 <td>
@@ -201,9 +202,20 @@
                         </div>
                     @endif
                 </td>
-                <td class="price-col">
-                    @if($product->price > 0)
-                        {{ number_format($product->price, 2) }}
+                <td align="center">
+                    {{ $product->custom_quantity }}
+                </td>
+                <td class="price-col" style="text-align: right; width: auto;">
+                    @if($product->custom_price > 0)
+                        {{ number_format($product->custom_price, 2) }}
+                    @else
+                        --
+                    @endif
+                </td>
+                <td class="price-col" style="text-align: right; width: auto;">
+                    @php $rowTotal = $product->custom_price * $product->custom_quantity; $grandTotal += $rowTotal; @endphp
+                    @if($rowTotal > 0)
+                        {{ number_format($rowTotal, 2) }}
                     @else
                         --
                     @endif
@@ -215,8 +227,8 @@
             {{-- Grand Total Row --}}
             @if($grandTotal > 0)
             <tr class="total-row">
-                <td colspan="2" style="text-align: right; font-weight: bold;">Total Estimated Amount:</td>
-                <td class="price-col">{{ number_format($grandTotal, 2) }}</td>
+                <td colspan="4" style="text-align: right; font-weight: bold;">Total Estimated Amount:</td>
+                <td class="price-col" style="text-align: right; width: auto;">{{ number_format($grandTotal, 2) }}</td>
                 <td></td>
             </tr>
             @endif
@@ -225,17 +237,25 @@
 
     {{-- Terms & Conditions --}}
     <div class="content-section">
-        <p><strong>Terms and condition</strong></p>
-        <table class="terms-table">
-            <tr><td width="100">Price</td><td>: In BDT excluding all local Vat, taxes and charges. Any deduction will be added.</td></tr>
-            <tr><td>Delivery</td><td>: 05 (Five) Days from the date of confirm order.</td></tr>
-            <tr><td>Warranty</td><td>: 12 (Twelve) months from the date of successful installation.</td></tr>
-            <tr><td>Installation</td><td>: By our Technical Personnel at free of cost.</td></tr>
-            <tr><td>Training</td><td>: We will provide operational training to the Operator/End user up to their satisfaction.</td></tr>
-            <tr><td>Spare Parts</td><td>: To be supplied on demand at mutually agreed prices.</td></tr>
-            <tr><td>Validity</td><td>: 05 (Five) days from quoting date.</td></tr>
-            <tr><td>Transport Cost</td><td>: Every type transport cost will pay by buyer.</td></tr>
-        </table>
+        
+        @if(isset($termConditions) && $termConditions->count() > 0)
+            @foreach($termConditions as $term)
+                <p><strong>{{ $term->title }}</strong></p>
+                <div style="font-size: 12px; margin-bottom: 15px;">{!! $term->content !!}</div>
+            @endforeach
+        @else
+            <p><strong>Terms and condition</strong></p>
+            <table class="terms-table">
+                <tr><td width="100">Price</td><td>: In BDT excluding all local Vat, taxes and charges. Any deduction will be added.</td></tr>
+                <tr><td>Delivery</td><td>: 05 (Five) Days from the date of confirm order.</td></tr>
+                <tr><td>Warranty</td><td>: 12 (Twelve) months from the date of successful installation.</td></tr>
+                <tr><td>Installation</td><td>: By our Technical Personnel at free of cost.</td></tr>
+                <tr><td>Training</td><td>: We will provide operational training to the Operator/End user up to their satisfaction.</td></tr>
+                <tr><td>Spare Parts</td><td>: To be supplied on demand at mutually agreed prices.</td></tr>
+                <tr><td>Validity</td><td>: 05 (Five) days from quoting date.</td></tr>
+                <tr><td>Transport Cost</td><td>: Every type transport cost will pay by buyer.</td></tr>
+            </table>
+        @endif
     </div>
 
     <div class="content-section">

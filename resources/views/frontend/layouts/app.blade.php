@@ -198,11 +198,25 @@
                     <p class="text-blue-100 leading-relaxed mb-6 text-sm text-justify">
                         {{ \Illuminate\Support\Str::limit($globalSettings->site_description ?? 'Slope Medical Solution is an ISO Certified Medical Equipment Importer, Supplier, and Service Provider Company. Our mission is to provide an exceptional range of high-quality products for the remarkable benefit of our valued customers.', 220) }}
                     </p>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">f</a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">t</a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">g+</a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">in</a>
+                    <div class="flex flex-wrap gap-3">
+                        @if(!empty($globalSettings->social_links['facebook']))
+                            <a href="{{ $globalSettings->social_links['facebook'] }}" target="_blank" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">f</a>
+                        @endif
+                        @if(!empty($globalSettings->social_links['twitter']))
+                            <a href="{{ $globalSettings->social_links['twitter'] }}" target="_blank" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">t</a>
+                        @endif
+                        @if(!empty($globalSettings->social_links['linkedin']))
+                            <a href="{{ $globalSettings->social_links['linkedin'] }}" target="_blank" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">in</a>
+                        @endif
+                        @if(!empty($globalSettings->social_links['instagram']))
+                            <a href="{{ $globalSettings->social_links['instagram'] }}" target="_blank" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">ig</a>
+                        @endif
+                        @if(!empty($globalSettings->social_links['youtube']))
+                            <a href="{{ $globalSettings->social_links['youtube'] }}" target="_blank" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">yt</a>
+                        @endif
+                        @if(!empty($globalSettings->social_links['whatsapp']))
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $globalSettings->social_links['whatsapp']) }}" target="_blank" class="w-8 h-8 rounded-full bg-accent hover:bg-yellow-300 text-slate-900 flex items-center justify-center transition-all text-xs font-bold">wa</a>
+                        @endif
                     </div>
                 </div>
 

@@ -39,7 +39,7 @@
                     <tbody>
                         @foreach($products as $product)
                             <tr>
-                                <td><input type="checkbox" name="product_ids[]" value="{{ $product->id }}" class="product-checkbox"></td>
+                                <td><input type="checkbox" name="product_ids[]" value="{{ $product->id }}" class="product-checkbox" data-title="{{ htmlentities($product->title) }}" data-price="{{ $product->price }}"></td>
                                 <td>{{ $product->order }}</td>
                                 <td>
                                     {{ $product->title }}
@@ -77,32 +77,64 @@
 
 {{-- Quotation Info Modal --}}
 <div class="modal fade" id="quotationModal" tabindex="-1" aria-labelledby="quotationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="quotationModalLabel">Quotation Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Quotation Title (Internal)</label>
-                    <input type="text" id="modal_quotation_title" class="form-control" placeholder="e.g. Hospital Equipment Quote">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Client/Hospital Name</label>
-                    <input type="text" id="modal_client_name" class="form-control" placeholder="[Client Hospital/Center Name]" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Client Address</label>
-                    <textarea id="modal_client_address" class="form-control" rows="2" placeholder="[Client Address]"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Client Phone</label>
-                    <input type="text" id="modal_client_phone" class="form-control" placeholder="[Client Phone]">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Prepared By</label>
-                    <input type="text" id="modal_prepared_by" class="form-control" value="{{ auth()->user()->name ?? (auth()->guard('admin')->user()->name ?? (\App\Models\GeneralSetting::first()->md_name ?? '')) }}">
+            <div class="modal-body p-4" style="max-height: 75vh; overflow-y: auto;">
+                <div class="row g-4">
+                    <div class="col-lg-6 border-end">
+                        <h6 class="fw-bold border-bottom pb-2 mb-3 text-primary"><i class="bi bi-person-lines-fill me-2"></i> Client Details</h6>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold text-muted small text-uppercase mb-1">Quotation Title / Ref</label>
+                                <input type="text" id="modal_quotation_title" class="form-control" placeholder="e.g. Hospital Equipment Quote">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small text-uppercase mb-1">To (Designation) <span class="text-danger">*</span></label>
+                                <input type="text" id="modal_client_designation" class="form-control" placeholder="The Managing Director" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small text-uppercase mb-1">Client Name <span class="text-danger">*</span></label>
+                                <input type="text" id="modal_client_name" class="form-control" placeholder="Hospital/Center" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small text-uppercase mb-1">Client Phone</label>
+                                <input type="text" id="modal_client_phone" class="form-control" placeholder="+880...">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold text-muted small text-uppercase mb-1">Client Address</label>
+                                <textarea id="modal_client_address" class="form-control" rows="2" placeholder="Full Address"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold text-muted small text-uppercase mb-1">Prepared By</label>
+                                <input type="text" id="modal_prepared_by" class="form-control bg-light" value="{{ auth()->user()->name ?? (auth()->guard('admin')->user()->name ?? '') }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <h6 class="fw-bold border-bottom pb-2 mb-3 text-primary"><i class="bi bi-box-seam me-2"></i> Selected Products</h6>
+                        
+                        <div class="table-responsive rounded border shadow-sm">
+                            <table class="table table-sm table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="border-bottom-0 py-2">Product</th>
+                                        <th width="120" class="border-bottom-0 py-2 text-center">Qty</th>
+                                        <th width="180" class="border-bottom-0 py-2 text-end">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="selected_products_tbody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <small class="text-muted mt-2 d-block"><i class="bi bi-info-circle me-1"></i> You can adjust quantities and prices before generating.</small>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -124,11 +156,32 @@
     const mainForm = document.querySelector('form[action="{{ route("admin.quotations.generate") }}"]');
 
     document.getElementById('openQuotationModal').addEventListener('click', function() {
-        const selected = document.querySelectorAll('.product-checkbox:checked').length;
-        if (selected === 0) {
+        const selected = document.querySelectorAll('.product-checkbox:checked');
+        if (selected.length === 0) {
             alert('Please select at least one product.');
             return;
         }
+
+        let tbody = document.getElementById('selected_products_tbody');
+        tbody.innerHTML = '';
+        
+        selected.forEach(cb => {
+            let title = cb.getAttribute('data-title');
+            let price = cb.getAttribute('data-price') || 0;
+            let id = cb.value;
+            
+            // Note: Since these inputs will be appended to DOM inside the modal,
+            // they wouldn't naturally submit with the form if the modal is outside the form.
+            // But wait! The modal is entirely *outside* the form. We need to handle this.
+            tbody.innerHTML += `
+                <tr>
+                    <td class="fw-medium" title="${title}">${title}</td>
+                    <td style="width: 120px;"><input type="number" id="qty_${id}" class="form-control text-center" value="1" min="1" style="width: 100%;"></td>
+                    <td style="width: 180px;"><input type="number" id="price_${id}" step="0.01" class="form-control text-end" value="${price}" style="width: 100%;"></td>
+                </tr>
+            `;
+        });
+
         quotationModal.show();
     });
 
@@ -136,6 +189,7 @@
         // Create hidden inputs for the extra fields
         const fields = {
             'quotation_title': 'modal_quotation_title',
+            'client_designation': 'modal_client_designation',
             'client_name': 'modal_client_name',
             'client_address': 'modal_client_address',
             'client_phone': 'modal_client_phone',
@@ -153,6 +207,32 @@
             }
             hidden.value = val;
         }
+        
+        // Also add logic to capture dynamic quantity and prices from the modal
+        const selected = document.querySelectorAll('.product-checkbox:checked');
+        
+        // Clean up any old dynamically added pricing hidden inputs in mainForm
+        mainForm.querySelectorAll('.dynamic-qty-price').forEach(el => el.remove());
+        
+        selected.forEach(cb => {
+            let id = cb.value;
+            let qty = document.getElementById(`qty_${id}`).value;
+            let price = document.getElementById(`price_${id}`).value;
+            
+            let hiddenQty = document.createElement('input');
+            hiddenQty.type = 'hidden';
+            hiddenQty.name = `quantities[${id}]`;
+            hiddenQty.value = qty;
+            hiddenQty.className = 'dynamic-qty-price';
+            mainForm.appendChild(hiddenQty);
+            
+            let hiddenPrice = document.createElement('input');
+            hiddenPrice.type = 'hidden';
+            hiddenPrice.name = `prices[${id}]`;
+            hiddenPrice.value = price;
+            hiddenPrice.className = 'dynamic-qty-price';
+            mainForm.appendChild(hiddenPrice);
+        });
 
         if(!document.getElementById('modal_client_name').value) {
             alert('Client Name is required');

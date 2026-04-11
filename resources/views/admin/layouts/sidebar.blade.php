@@ -60,8 +60,20 @@
             </li>
 
             <li class="nav-item">
+                <a href="{{ route('admin.testimonials.index') }}" class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center"><i class="bi bi-chat-quote me-2"></i> Success Stories</div>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="{{ route('admin.quotations.index') }}" class="nav-link {{ request()->routeIs('admin.quotations.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center"><i class="bi bi-file-earmark-pdf me-2"></i> Quotations</div>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('admin.terms-and-conditions.index') }}" class="nav-link {{ request()->routeIs('admin.terms-and-conditions.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center"><i class="bi bi-card-text me-2"></i> Terms & Conditions</div>
                 </a>
             </li>
 

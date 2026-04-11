@@ -62,6 +62,19 @@
                                 <input type="file" name="hero_image" class="form-control">
                             </div>
 
+                            <div class="mb-3">
+                                <label class="form-label">Hero Background Video (MP4/WebM, max 50MB)</label>
+                                @if($settings->hero_video)
+                                    <div class="mb-2">
+                                        <video src="{{ Storage::url($settings->hero_video) }}" width="320" height="80"
+                                               class="rounded" controls muted style="max-height:80px;"></video>
+                                        <small class="d-block text-muted mt-1">Current video will be replaced if you upload a new one.</small>
+                                    </div>
+                                @endif
+                                <input type="file" name="hero_video" class="form-control" accept="video/mp4,video/webm,video/ogg">
+                                <small class="text-muted">This video autoplays silently as the hero background.</small>
+                            </div>
+
                             <hr>
                             <h5 class="mb-3">Contact Information</h5>
                             <div class="row">
@@ -97,6 +110,41 @@
                                     </div>
                                 @endif
                                 <input type="file" name="signature" class="form-control">
+                            </div>
+
+                            <hr>
+                            <h5 class="mb-3">Social Media Links</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><i class="bi bi-facebook text-primary me-1"></i> Facebook URL</label>
+                                    <input type="url" name="facebook" class="form-control"
+                                        value="{{ $settings->social_links['facebook'] ?? '' }}" placeholder="https://facebook.com/...">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><i class="bi bi-twitter-x me-1"></i> Twitter / X URL</label>
+                                    <input type="url" name="twitter" class="form-control"
+                                        value="{{ $settings->social_links['twitter'] ?? '' }}" placeholder="https://twitter.com/...">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><i class="bi bi-linkedin text-info me-1"></i> LinkedIn URL</label>
+                                    <input type="url" name="linkedin" class="form-control"
+                                        value="{{ $settings->social_links['linkedin'] ?? '' }}" placeholder="https://linkedin.com/...">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><i class="bi bi-instagram text-danger me-1"></i> Instagram URL</label>
+                                    <input type="url" name="instagram" class="form-control"
+                                        value="{{ $settings->social_links['instagram'] ?? '' }}" placeholder="https://instagram.com/...">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><i class="bi bi-youtube text-danger me-1"></i> YouTube URL</label>
+                                    <input type="url" name="youtube" class="form-control"
+                                        value="{{ $settings->social_links['youtube'] ?? '' }}" placeholder="https://youtube.com/...">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><i class="bi bi-whatsapp text-success me-1"></i> WhatsApp Number</label>
+                                    <input type="text" name="whatsapp" class="form-control"
+                                        value="{{ $settings->social_links['whatsapp'] ?? '' }}" placeholder="+8801711000000">
+                                </div>
                             </div>
 
                             <hr>

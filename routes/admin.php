@@ -28,6 +28,8 @@ Route::prefix('admin')->group(function () {
         // Dynamic Modules
         Route::resource('team', App\Http\Controllers\Admin\TeamMemberController::class)->names('admin.team');
         Route::resource('clients', App\Http\Controllers\Admin\ClientController::class)->names('admin.clients');
+        Route::resource('testimonials', App\Http\Controllers\Admin\TestimonialController::class)->names('admin.testimonials');
+        Route::resource('terms-and-conditions', App\Http\Controllers\Admin\TermAndConditionController::class)->names('admin.terms-and-conditions');
         Route::post('quotations/generate-pdf', [App\Http\Controllers\Admin\QuotationController::class, 'generate'])->name('admin.quotations.generate');
         Route::get('quotations/generate-pdf', function() {
             return redirect()->route('admin.products.index')->with('error', 'Please select products first.');
