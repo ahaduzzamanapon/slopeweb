@@ -45,6 +45,7 @@ class QuotationController extends Controller
             'prepared_by'        => 'nullable|string|max:255',
             'term_ids'           => 'nullable|array',
             'term_ids.*'         => 'exists:term_and_conditions,id',
+            'custom_terms'       => 'nullable|array',
         ]);
 
         $products  = \App\Models\Product::whereIn('id', $request->product_ids)->with('category')->get();
@@ -63,6 +64,15 @@ class QuotationController extends Controller
         } else {
             $termConditions = \App\Models\TermAndCondition::where('is_active', true)->get();
         }
+
+        // Apply temporary term edits
+        $customTerms = $request->input('custom_terms', []);
+        $termConditions->map(function($tc) use ($customTerms) {
+            if (isset($customTerms[$tc->id])) {
+                $tc->content = $customTerms[$tc->id];
+            }
+            return $tc;
+        });
 
         // Auto-generate ref ID: Slope/Q-001/2026
         $lastId    = Quotation::max('id') ?? 0;

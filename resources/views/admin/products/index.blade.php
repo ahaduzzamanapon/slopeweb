@@ -147,7 +147,7 @@
                                 <input class="form-check-input tc-check" type="checkbox" value="{{ $term->id }}" id="tc_{{ $term->id }}" checked>
                                 <label class="form-check-label" for="tc_{{ $term->id }}">
                                     <span class="fw-semibold small">{{ $term->title }}</span>
-                                    <span class="text-muted d-block" style="font-size:11px;">{{ Str::limit($term->content, 65) }}</span>
+                                    <textarea id="tc_content_{{ $term->id }}" rows="2" class="form-control form-control-sm text-muted mt-1" style="font-size:11px;">{{ $term->content }}</textarea>
                                 </label>
                             </div>
                         </div>
@@ -253,15 +253,26 @@
             mainForm.appendChild(hiddenPrice);
         });
 
-        // Capture selected term IDs
+        // Capture selected term IDs and their temporarily edited content
         mainForm.querySelectorAll('.dynamic-tc').forEach(el => el.remove());
+        mainForm.querySelectorAll('.dynamic-tc-content').forEach(el => el.remove());
+        
         document.querySelectorAll('.tc-check:checked').forEach(cb => {
+            let tcId = cb.value;
             let hiddenTc = document.createElement('input');
             hiddenTc.type = 'hidden';
             hiddenTc.name = 'term_ids[]';
-            hiddenTc.value = cb.value;
+            hiddenTc.value = tcId;
             hiddenTc.className = 'dynamic-tc';
             mainForm.appendChild(hiddenTc);
+
+            let editedContent = document.getElementById(`tc_content_${tcId}`).value;
+            let hiddenContent = document.createElement('input');
+            hiddenContent.type = 'hidden';
+            hiddenContent.name = `custom_terms[${tcId}]`;
+            hiddenContent.value = editedContent;
+            hiddenContent.className = 'dynamic-tc-content';
+            mainForm.appendChild(hiddenContent);
         });
 
         if(!document.getElementById('modal_client_name').value) {

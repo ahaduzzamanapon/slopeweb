@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Quotation - {{ $refId }}</title>
 <style>
-    @page { margin: 2cm 2.5cm 2.5cm 2.5cm; }
+    @page { margin: 2cm 0cm 2.5cm 0cm; }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px; }
 
     /* ── LETTERHEAD ─────────────────────────────── */
     .lh { width:100%; border-bottom:3px solid #c00; padding-bottom:6px; margin-bottom:12px; }
@@ -235,7 +235,7 @@
     @foreach($termConditions as $tc)
     <tr>
         <td>{{ $tc->title }}</td>
-        <td>: {{ $tc->content }}</td>
+        <td>: {!! nl2br(e($tc->content)) !!}</td>
     </tr>
     @endforeach
 </table>

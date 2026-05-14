@@ -22,7 +22,8 @@
                 <thead class="table-light">
                     <tr>
                         <th style="width:60px">#</th>
-                        <th>Title</th>
+                        <th style="width:200px">Title</th>
+                        <th>Terms Content (HTML)</th>
                         <th style="width:100px">Status</th>
                         <th style="width:150px">Actions</th>
                     </tr>
@@ -32,6 +33,11 @@
                         <tr>
                             <td>{{ $term->id }}</td>
                             <td><strong>{{ $term->title }}</strong></td>
+                            <td>
+                                <div style="max-height: 80px; overflow-y: auto; font-size: 12px; background: #f8f9fa; padding: 8px; border-radius: 4px; border: 1px solid #dee2e6;">
+                                    {!! $term->content !!}
+                                </div>
+                            </td>
                             <td>
                                 <span class="badge {{ $term->is_active ? 'bg-success' : 'bg-secondary' }}">
                                     {{ $term->is_active ? 'Active' : 'Inactive' }}
