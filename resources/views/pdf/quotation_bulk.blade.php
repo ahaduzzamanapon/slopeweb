@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Quotation - {{ $refId }}</title>
 <style>
-    @page { margin: 1.5cm 1.5cm 2.5cm 1.5cm; }
+    @page { margin: 2cm 2.5cm 2.5cm 2.5cm; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; }
 

@@ -290,49 +290,6 @@
         </div>
     </section>
 
-    <!-- Catalogue Download Section -->
-    <section class="py-20 bg-primary relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png')"></div>
-        <div class="container mx-auto px-4 relative z-10 text-center fade-up">
-            <div class="text-accent text-5xl mb-4">📋</div>
-            <h2 class="text-3xl md:text-4xl font-display font-extrabold text-white mb-4">Download Our Product Catalogue</h2>
-            <p class="text-blue-200 text-lg mb-8 max-w-xl mx-auto">Get the full catalogue of our medical equipment with specifications and pricing.</p>
-            <button onclick="document.getElementById('catalogueModal').classList.remove('hidden')"
-                class="px-10 py-4 bg-accent text-slate-900 font-bold rounded-full hover:bg-yellow-400 transition-all shadow-xl shadow-yellow-500/30 hover:-translate-y-1 transform active:scale-95">
-                Download Catalogue
-            </button>
-        </div>
-    </section>
-
-    <!-- Catalogue Download Modal -->
-    <div id="catalogueModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative fade-up">
-            <button onclick="document.getElementById('catalogueModal').classList.add('hidden')"
-                class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors text-2xl leading-none">&times;</button>
-            <div class="text-center mb-6">
-                <div class="text-4xl mb-3">📥</div>
-                <h3 class="text-2xl font-display font-bold text-slate-900">Get the Catalogue</h3>
-                <p class="text-slate-500 text-sm mt-1">Please enter your details to download.</p>
-            </div>
-            <form action="{{ route('catalogue.download') }}" method="POST">
-                @csrf
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Your Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" required placeholder="e.g. Dr. Rahman"
-                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mobile Number <span class="text-red-500">*</span></label>
-                    <input type="tel" name="phone" required placeholder="+880..."
-                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
-                </div>
-                <button type="submit"
-                    class="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-lg shadow-primary/30">
-                    📥 Download Now
-                </button>
-            </form>
-        </div>
-    </div>
 
     <!-- Our Clients Section -->
     @if(isset($clients) && $clients->count())

@@ -71,18 +71,8 @@
                     </div>
 
                     <div class="flex flex-col gap-4">
-                        <a href="{{ route('products.quotation', $product->slug) }}"
-                            class="w-full bg-primary hover:bg-blue-800 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            Download Quotation
-                        </a>
-
                         @if($product->catalog)
-                            <a href="{{ Storage::url($product->catalog) }}" target="_blank"
+                            <button onclick="document.getElementById('catalogueModal').classList.remove('hidden')"
                                 class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -90,7 +80,7 @@
                                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
                                 Download Product Catalog
-                            </a>
+                            </button>
                         @endif
 
                         <a href="{{ route('home') }}#contact"
@@ -128,4 +118,35 @@
 
         </div>
     </section>
+
+    <!-- Catalogue Download Modal -->
+    <div id="catalogueModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative fade-up">
+            <button onclick="document.getElementById('catalogueModal').classList.add('hidden')"
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors text-2xl leading-none">&times;</button>
+            <div class="text-center mb-6">
+                <div class="text-4xl mb-3">📥</div>
+                <h3 class="text-2xl font-display font-bold text-slate-900">Get the Catalogue</h3>
+                <p class="text-slate-500 text-sm mt-1">Please enter your details to download.</p>
+            </div>
+            <form action="{{ route('catalogue.download') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Your Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="name" required placeholder="e.g. Dr. Rahman"
+                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mobile Number <span class="text-red-500">*</span></label>
+                    <input type="tel" name="phone" required placeholder="+880..."
+                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
+                </div>
+                <button type="submit"
+                    class="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-lg shadow-primary/30">
+                    📥 Download Now
+                </button>
+            </form>
+        </div>
+    </div>
 @endsection

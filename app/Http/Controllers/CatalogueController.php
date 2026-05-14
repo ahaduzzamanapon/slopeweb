@@ -14,12 +14,20 @@ class CatalogueController extends Controller
         $request->validate([
             'name'  => 'required|string|max:255',
             'phone' => 'required|string|max:50',
+            'product_id' => 'nullable|exists:products,id',
         ]);
 
         CatalogueDownload::create([
             'name'  => $request->name,
             'phone' => $request->phone,
         ]);
+
+        if ($request->filled('product_id')) {
+            $product = \App\Models\Product::find($request->product_id);
+            if ($product && $product->catalog) {
+                return response()->download(storage_path('app/public/' . $product->catalog), 'Catalogue-' . \Illuminate\Support\Str::slug($product->title) . '.pdf');
+            }
+        }
 
         $settings = GeneralSetting::first();
 
