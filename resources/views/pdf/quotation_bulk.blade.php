@@ -14,7 +14,7 @@
 
     /* ── FOOTER (fixed) ──────────────────────────── */
     .pg-footer {
-        position:fixed; bottom:0; left:0; right:0;
+        position:fixed; bottom:0.8cm; left:0; right:0;
         border-top:3px solid #c00; padding-top:4px;
         font-size:9px; color:#333; text-align:center; background:#fff;
     }
