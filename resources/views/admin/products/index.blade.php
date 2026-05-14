@@ -77,7 +77,7 @@
 
 {{-- Quotation Info Modal --}}
 <div class="modal fade" id="quotationModal" tabindex="-1" aria-labelledby="quotationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="quotationModalLabel">Quotation Details</h5>
@@ -85,7 +85,7 @@
             </div>
             <div class="modal-body p-4" style="max-height: 75vh; overflow-y: auto;">
                 <div class="row g-4">
-                    <div class="col-lg-6 border-end">
+                    <div class="col-lg-5 border-end">
                         <h6 class="fw-bold border-bottom pb-2 mb-3 text-primary"><i class="bi bi-person-lines-fill me-2"></i> Client Details</h6>
                         
                         <div class="row g-3">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-6">
+                    <div class="col-lg-7">
                         <h6 class="fw-bold border-bottom pb-2 mb-3 text-primary"><i class="bi bi-box-seam me-2"></i> Selected Products</h6>
                         
                         <div class="table-responsive rounded border shadow-sm">
