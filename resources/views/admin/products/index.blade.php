@@ -124,9 +124,9 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="border-bottom-0 py-2">Product</th>
-                                        <th class="border-bottom-0 py-2 text-center" style="width:70px;">Qty</th>
-                                        <th class="border-bottom-0 py-2 text-end" style="width:130px;">Unit Price</th>
-                                        <th class="border-bottom-0 py-2 text-end" style="width:130px;">Total</th>
+                                        <th class="border-bottom-0 py-2 text-center" style="width:95px;">Qty</th>
+                                        <th class="border-bottom-0 py-2 text-end" style="width:155px;">Unit Price</th>
+                                        <th class="border-bottom-0 py-2 text-end" style="width:140px;">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="selected_products_tbody">
@@ -199,15 +199,15 @@
             tbody.innerHTML += `
                 <tr>
                     <td class="fw-medium" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${title}">${title}</td>
-                    <td style="width:70px;">
-                        <input type="number" id="qty_${id}" class="form-control form-control-sm text-center" value="1" min="1" style="min-width:55px;"
+                    <td style="width:95px;">
+                        <input type="number" id="qty_${id}" class="form-control form-control-sm text-center" value="1" min="1" style="min-width:78px;"
                             oninput="updateTotal('${id}')">
                     </td>
-                    <td style="width:130px;">
-                        <input type="number" id="price_${id}" step="0.01" class="form-control form-control-sm text-end" value="${price}" style="min-width:110px;"
+                    <td style="width:155px;">
+                        <input type="number" id="price_${id}" step="0.01" class="form-control form-control-sm text-end" value="${price}" style="min-width:135px;"
                             oninput="updateTotal('${id}')">
                     </td>
-                    <td id="total_${id}" style="width:130px;" class="text-end fw-bold text-success">${total.toLocaleString('en-BD', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td id="total_${id}" style="width:140px;" class="text-end fw-bold text-success">${total.toLocaleString('en-BD', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
                 </tr>
             `;
         });
