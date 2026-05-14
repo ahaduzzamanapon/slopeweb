@@ -83,19 +83,19 @@
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Features</label>
                     <div id="quill_features" style="height: 180px;"></div>
-                    <textarea name="features" id="features_input" class="d-none">{{ $product->features }}</textarea>
+                    <textarea name="features" id="features_input" class="d-none">{!! $product->features !!}</textarea>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Short Description</label>
                     <div id="quill_short" style="height: 120px;"></div>
-                    <textarea name="short_description" id="short_input" class="d-none">{{ $product->short_description }}</textarea>
+                    <textarea name="short_description" id="short_input" class="d-none">{!! $product->short_description !!}</textarea>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Full Description</label>
                     <div id="quill_desc" style="height: 220px;"></div>
-                    <textarea name="description" id="desc_input" class="d-none">{{ $product->description }}</textarea>
+                    <textarea name="description" id="desc_input" class="d-none">{!! $product->description !!}</textarea>
                 </div>
 
                 <div class="row mb-3">
