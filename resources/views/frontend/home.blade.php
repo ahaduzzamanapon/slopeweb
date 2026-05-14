@@ -23,7 +23,7 @@
 
         <div class="container mx-auto px-4 relative z-10 py-32">
             <div class="max-w-4xl fade-up">
-                <h1 class="text-6xl md:text-8xl font-display font-extrabold text-white mb-8 leading-[1.1] tracking-tight">
+                <h1 class="text-3xl md:text-5xl font-display font-extrabold text-white mb-8 leading-[1.1] tracking-tight">
                     @if(!empty($settings->hero_title))
                         {!! nl2br(e($settings->hero_title)) !!}
                     @else
@@ -371,4 +371,4 @@
     </section>
     @endif
 
-@endsection
+@endsection
