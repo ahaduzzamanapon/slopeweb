@@ -9,13 +9,13 @@
     body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px; }
 
     /* ── LETTERHEAD ─────────────────────────────── */
-    .lh { width:100%; border-bottom:3px solid #c00; padding-bottom:6px; margin-bottom:12px; }
+    .lh { width:100%; border-bottom:4px solid #c00; padding-bottom:8px; margin-bottom:16px; }
     .lh-inner { display:table; width:100%; }
-    .lh-logo { display:table-cell; width:130px; vertical-align:middle; }
-    .lh-logo img { width:120px; height:auto; }
+    .lh-logo { display:table-cell; width:180px; vertical-align:middle; }
+    .lh-logo img { width:165px; height:auto; }
     .lh-co { display:table-cell; vertical-align:middle; text-align:right; }
-    .lh-co .co-name { font-size:20px; font-weight:bold; color:#1a3a8f; letter-spacing:1px; }
-    .lh-co .co-tag  { font-size:11px; color:#555; font-style:italic; }
+    .lh-co .co-name { font-size:32px; font-weight:bold; color:#1a3a8f; letter-spacing:1.5px; line-height:1.1; }
+    .lh-co .co-tag  { font-size:15px; color:#444; font-style:italic; margin-top:3px; }
 
     /* ── FOOTER (fixed) ──────────────────────────── */
     .pg-footer {
@@ -129,7 +129,7 @@
     <p class="sn">{{ $settings->md_name ?? $preparedBy }}</p>
     <div class="sd">
         Managing Director<br>
-        @if(!empty($settings->md_phone))Cell: {{ $settings->md_phone }}<br>@endif
+        @if(!empty($settings->phone))Cell: {{ $settings->phone }}<br>@endif
         <strong>{{ $settings->site_title ?? 'Slope Medical Solution' }}</strong><br>
         {{ $settings->address ?? '' }}
     </div>
@@ -270,7 +270,7 @@
     <p class="sn">{{ $settings->md_name ?? $preparedBy }}</p>
     <div class="sd">
         Managing Director<br>
-        @if(!empty($settings->md_phone))Cell: {{ $settings->md_phone }}<br>@endif
+        @if(!empty($settings->phone))Cell: {{ $settings->phone }}<br>@endif
         <strong>{{ $settings->site_title ?? 'Slope Medical Solution' }}</strong><br>
         {{ $settings->address ?? '' }}
     </div>

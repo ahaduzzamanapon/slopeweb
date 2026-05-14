@@ -140,16 +140,14 @@
                 @if(isset($terms) && $terms->count())
                 <div class="mt-4 pt-3 border-top">
                     <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-card-list me-2"></i> Terms &amp; Conditions <small class="text-muted fw-normal">(uncheck to exclude from PDF)</small></h6>
-                    <div class="row g-2">
+                    <div class="d-flex flex-column gap-2">
                         @foreach($terms as $term)
-                        <div class="col-md-6">
-                            <div class="form-check border rounded-2 p-2 ps-4 bg-light">
-                                <input class="form-check-input tc-check" type="checkbox" value="{{ $term->id }}" id="tc_{{ $term->id }}" checked>
-                                <label class="form-check-label" for="tc_{{ $term->id }}">
-                                    <span class="fw-semibold small">{{ $term->title }}</span>
-                                    <textarea id="tc_content_{{ $term->id }}" rows="2" class="form-control form-control-sm text-muted mt-1" style="font-size:11px;">{{ $term->content }}</textarea>
-                                </label>
+                        <div class="border rounded-2 p-3 bg-light">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <input class="form-check-input tc-check flex-shrink-0" type="checkbox" value="{{ $term->id }}" id="tc_{{ $term->id }}" checked style="width:18px;height:18px;">
+                                <label class="fw-bold mb-0 fs-6" for="tc_{{ $term->id }}">{{ $term->title }}</label>
                             </div>
+                            <textarea id="tc_content_{{ $term->id }}" rows="3" class="form-control" style="font-size:13px;">{{ $term->content }}</textarea>
                         </div>
                         @endforeach
                     </div>
