@@ -63,7 +63,7 @@ class SliderController extends Controller
 
         if ($request->hasFile('image')) {
             if ($slider->image) {
-                Storage::delete($slider->image);
+                Storage::disk('public')->delete($slider->image);
             }
             $data['image'] = $request->file('image')->store('sliders', 'public');
         }
@@ -76,7 +76,7 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         if ($slider->image) {
-            Storage::delete($slider->image);
+            Storage::disk('public')->delete($slider->image);
         }
         $slider->delete();
         return back()->with('success', 'Slider deleted successfully.');

@@ -136,6 +136,25 @@
                         <small class="text-muted mt-2 d-block"><i class="bi bi-info-circle me-1"></i> You can adjust quantities and prices before generating.</small>
                     </div>
                 </div>
+                {{-- T&C Section --}}
+                @if(isset($terms) && $terms->count())
+                <div class="mt-4 pt-3 border-top">
+                    <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-card-list me-2"></i> Terms &amp; Conditions <small class="text-muted fw-normal">(uncheck to exclude from PDF)</small></h6>
+                    <div class="row g-2">
+                        @foreach($terms as $term)
+                        <div class="col-md-6">
+                            <div class="form-check border rounded-2 p-2 ps-4 bg-light">
+                                <input class="form-check-input tc-check" type="checkbox" value="{{ $term->id }}" id="tc_{{ $term->id }}" checked>
+                                <label class="form-check-label" for="tc_{{ $term->id }}">
+                                    <span class="fw-semibold small">{{ $term->title }}</span>
+                                    <span class="text-muted d-block" style="font-size:11px;">{{ Str::limit($term->content, 65) }}</span>
+                                </label>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -232,6 +251,17 @@
             hiddenPrice.value = price;
             hiddenPrice.className = 'dynamic-qty-price';
             mainForm.appendChild(hiddenPrice);
+        });
+
+        // Capture selected term IDs
+        mainForm.querySelectorAll('.dynamic-tc').forEach(el => el.remove());
+        document.querySelectorAll('.tc-check:checked').forEach(cb => {
+            let hiddenTc = document.createElement('input');
+            hiddenTc.type = 'hidden';
+            hiddenTc.name = 'term_ids[]';
+            hiddenTc.value = cb.value;
+            hiddenTc.className = 'dynamic-tc';
+            mainForm.appendChild(hiddenTc);
         });
 
         if(!document.getElementById('modal_client_name').value) {

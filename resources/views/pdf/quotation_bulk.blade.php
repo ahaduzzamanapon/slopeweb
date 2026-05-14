@@ -1,285 +1,280 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-        @page {
-            margin: 1.5cm;
-        }
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Quotation - {{ $refId }}</title>
+<style>
+    @page { margin: 1.5cm 1.5cm 2.5cm 1.5cm; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; }
 
-        body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 13px;
-            color: #333;
-            line-height: 1.5;
-        }
+    /* ── LETTERHEAD ─────────────────────────────── */
+    .lh { width:100%; border-bottom:3px solid #c00; padding-bottom:6px; margin-bottom:12px; }
+    .lh-inner { display:table; width:100%; }
+    .lh-logo { display:table-cell; width:130px; vertical-align:middle; }
+    .lh-logo img { width:120px; height:auto; }
+    .lh-co { display:table-cell; vertical-align:middle; text-align:right; }
+    .lh-co .co-name { font-size:20px; font-weight:bold; color:#1a3a8f; letter-spacing:1px; }
+    .lh-co .co-tag  { font-size:11px; color:#555; font-style:italic; }
 
-        .header {
-            margin-bottom: 20px;
-        }
+    /* ── FOOTER (fixed) ──────────────────────────── */
+    .pg-footer {
+        position:fixed; bottom:0; left:0; right:0;
+        border-top:3px solid #c00; padding-top:4px;
+        font-size:9px; color:#333; text-align:center; background:#fff;
+    }
 
-        .company-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2457aa;
-            margin: 0;
-            text-transform: uppercase;
-        }
+    /* ── PAGE BREAK ──────────────────────────────── */
+    .pb { page-break-after:always; }
 
-        .company-tagline {
-            font-size: 14px;
-            font-style: italic;
-            color: #666;
-            margin: 0;
-        }
+    /* ── COVER LETTER ────────────────────────────── */
+    .cov-title { text-align:center; font-size:17px; font-weight:bold; text-decoration:underline; font-style:italic; margin:14px 0; }
+    .dr-tbl { width:auto; margin-bottom:14px; }
+    .dr-tbl td { padding:2px 6px 2px 0; font-size:12px; }
+    .dr-tbl .lbl { font-weight:bold; width:40px; }
+    .to-blk { margin-bottom:16px; line-height:1.8; }
+    .subj { font-weight:bold; margin-bottom:14px; }
+    .body-txt { line-height:1.9; margin-bottom:14px; text-align:justify; }
+    .sig { margin-top:30px; }
+    .sig img { height:50px; display:block; margin-bottom:4px; }
+    .sig .sn { font-weight:bold; font-size:13px; }
+    .sig .sd { font-size:11px; line-height:1.7; }
 
-        .title {
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
+    /* ── PRODUCT TABLE ───────────────────────────── */
+    .ptbl { width:100%; border-collapse:collapse; }
+    .ptbl th { background:#1a3a8f; color:#fff; border:1px solid #333; padding:6px 8px; font-size:12px; text-align:center; }
+    .ptbl td { border:1px solid #555; padding:6px 8px; vertical-align:top; }
+    .ptbl .sn { text-align:center; font-weight:bold; width:38px; }
+    .ptbl .pr { text-align:right; width:110px; font-weight:bold; }
+    .ptbl .rm { text-align:center; width:80px; }
+    .pname { font-weight:bold; text-decoration:underline; font-size:13px; }
+    .pmeta { font-size:11px; line-height:1.9; margin-top:5px; }
+    .pmeta span { display:inline-block; width:68px; font-weight:bold; }
+    .pimg  { max-width:180px; max-height:140px; display:block; margin:8px auto; }
+    .fhd   { font-weight:bold; text-decoration:underline; margin-top:8px; margin-bottom:3px; font-size:12px; }
+    .flist { margin-left:14px; }
+    .flist li { margin-bottom:2px; font-size:11px; line-height:1.5; }
+    .inst-note { font-weight:bold; margin-top:6px; font-size:12px; }
+    .spec-tbl  { width:100%; font-size:11px; }
+    .spec-tbl td { border:none; padding:1px 4px 1px 0; }
+    .spec-tbl td:first-child { width:170px; }
 
-        .info-section {
-            margin-bottom: 20px;
-        }
-
-        .info-row {
-            margin-bottom: 3px;
-        }
-
-        .info-label {
-            display: inline-block;
-            width: 50px;
-        }
-
-        .content-section {
-            margin-bottom: 20px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        .table th,
-        .table td {
-            border: 1px solid #000;
-            padding: 8px;
-            vertical-align: top;
-        }
-
-        .table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .price-col {
-            text-align: right;
-            font-weight: bold;
-            width: 120px;
-        }
-
-        .remark-col {
-            text-align: center;
-            width: 80px;
-        }
-
-        .spec-list {
-            margin: 5px 0;
-            padding-left: 0;
-            list-style: none;
-        }
-
-        .spec-list li {
-            margin-bottom: 2px;
-        }
-
-        .total-row td {
-            font-weight: bold;
-            background-color: #f9f9f9;
-        }
-
-        .signature-section {
-            margin-top: 30px;
-        }
-
-        .signature-box {
-            width: 300px;
-        }
-
-        .terms-table {
-            width: 100%;
-            font-size: 12px;
-        }
-
-        .terms-table td {
-            padding: 2px 4px;
-            vertical-align: top;
-        }
-    </style>
+    /* ── T&C PAGE ─────────────────────────────────── */
+    .tc-title { text-align:center; font-size:16px; font-weight:bold; text-decoration:underline; font-style:italic; margin:14px 0 18px; }
+    .tc-tbl   { width:100%; }
+    .tc-tbl td { padding:4px 0; vertical-align:top; line-height:1.7; }
+    .tc-tbl td:first-child { font-weight:bold; white-space:nowrap; padding-right:8px; width:130px; }
+    .tc-closing { margin-top:16px; font-weight:bold; line-height:1.8; text-align:justify; }
+    .tc-assur   { font-size:14px; margin-top:10px; }
+</style>
 </head>
-
 <body>
-    {{-- Header --}}
-    <div class="header">
-        <div class="company-name">{{ $settings->site_title ?? 'Slope Medical Solution' }}</div>
-        <div class="company-tagline">Run for Rise</div>
+
+{{-- Fixed footer every page --}}
+<div class="pg-footer">
+    {{ $settings->address ?? '59/D-A, Darussalam Tower, Shop no-31(Ground Floor), Darussalam, Mirpur, Dhaka-1216.' }}
+    &nbsp;|&nbsp; Hotline: {{ $settings->phone ?? '01730587330' }}
+    &nbsp;|&nbsp; E-mail: {{ $settings->email ?? 'slopemedical@gmail.com' }}
+    &nbsp;|&nbsp; Website: {{ $settings->website ?? 'www.slope.com.bd' }}
+</div>
+
+{{-- ══════════════════════════════════════════════════
+     PAGE 1 — COVER LETTER
+══════════════════════════════════════════════════ --}}
+<div class="lh"><div class="lh-inner">
+    <div class="lh-logo">
+        @if($settings->logo)<img src="{{ public_path('storage/'.$settings->logo) }}" alt="Logo">@endif
     </div>
-
-    <div class="title">Quotation</div>
-
-    <div class="info-section">
-        <div class="info-row"><span class="info-label">Date</span> : {{ date('d.m.Y') }}</div>
-        <div class="info-row"><span class="info-label">Ref</span> : {{ $refId }}</div>
+    <div class="lh-co">
+        <div class="co-name">{{ strtoupper($settings->site_title ?? 'SLOPE MEDICAL SOLUTION') }}</div>
+        <div class="co-tag">Run for Rise</div>
     </div>
+</div></div>
 
-    <div class="info-section">
-        <strong>To,</strong><br>
-        {{ $client['designation'] }}<br>
-        {{ $client['name'] }}<br>
-        {{ $client['address'] }}<br>
-        {{ $client['phone'] }}
+<div class="cov-title"><u><i>Quotation</i></u></div>
+
+<table class="dr-tbl">
+    <tr><td class="lbl">Date</td><td>:&nbsp;<strong>{{ date('d.m.Y') }}</strong></td></tr>
+    <tr><td class="lbl">Ref</td> <td>:&nbsp;<strong>Quotation-{{ $refId }}</strong></td></tr>
+</table>
+
+<div class="to-blk">
+    <p>To,</p>
+    <p><strong>{{ $client['designation'] ?? 'The Managing Director' }}</strong></p>
+    <p><strong>{{ $client['name'] ?? '' }}</strong></p>
+    <p>{{ $client['address'] ?? '' }}</p>
+    <p>{{ $client['phone'] ?? '' }}</p>
+</div>
+
+<p class="subj">Subject: Price Proposal for Hospital and Diagnostic Equipment's.</p>
+
+<div class="body-txt">
+    <p>Dear Sir,</p>
+    <p>First and for most, on behalf of <strong>{{ $settings->site_title ?? 'Slope Medical Solution' }}</strong>. We would like to express our profound appreciation for giving us the opportunity to offer price quotation for <strong>diagnostic &amp; hospital</strong> items&nbsp; for your hospital or diagnostic.<br>
+    We hope you will find our proposal in line with your requirements. However, if you need any further clarification please let us know.</p>
+    <br>
+    <p>We assure you our best services and closest attention at all times.</p>
+</div>
+
+<p style="font-weight:bold;margin-bottom:30px;">Thanking You.</p>
+<br><br>
+
+<div class="sig">
+    <p>Sincerely yours</p>
+    @if($settings->signature)
+        <img src="{{ public_path('storage/'.$settings->signature) }}" alt="Signature">
+    @else
+        <br><br><br>
+    @endif
+    <p class="sn">{{ $settings->md_name ?? $preparedBy }}</p>
+    <div class="sd">
+        Managing Director<br>
+        @if(!empty($settings->md_phone))Cell: {{ $settings->md_phone }}<br>@endif
+        <strong>{{ $settings->site_title ?? 'Slope Medical Solution' }}</strong><br>
+        {{ $settings->address ?? '' }}
     </div>
+</div>
 
-    <div class="content-section">
-        <p><strong>Subject: Price Proposal for Hospital and Diagnostic Equipment's.</strong></p>
-        <p>Dear Sir,</p>
-        <p>First and for most, on behalf of <strong>{{ $settings->site_title ?? 'Slope Medical Solution' }}</strong>. We would like to express our
-            profound appreciation for giving us the opportunity to offer price quotation for diagnostic &amp; hospital items
-            for your hospital or diagnostic.</p>
-        <p>We hope you will find our proposal in line with your requirements. However, if you need any further
-            clarification please let us know.</p>
-        <p>We assure you our best services and closest attention at all times.</p>
-        <p>Thanking You.</p>
-    </div>
+<div class="pb"></div>
 
-    {{-- Products Table --}}
-    @php $grandTotal = 0; @endphp
-    <table class="table">
+{{-- ══════════════════════════════════════════════════
+     PAGES 2+ — ONE PRODUCT PER PAGE
+══════════════════════════════════════════════════ --}}
+@foreach($products as $i => $product)
+<div class="{{ !$loop->last ? 'pb' : '' }}">
+
+    <div class="lh"><div class="lh-inner">
+        <div class="lh-logo">
+            @if($settings->logo)<img src="{{ public_path('storage/'.$settings->logo) }}" alt="Logo">@endif
+        </div>
+        <div class="lh-co">
+            <div class="co-name">{{ strtoupper($settings->site_title ?? 'SLOPE MEDICAL SOLUTION') }}</div>
+            <div class="co-tag">Run for Rise</div>
+        </div>
+    </div></div>
+
+    <table class="ptbl">
         <thead>
             <tr>
-                <th width="30">S/N</th>
+                <th class="sn">S/N</th>
                 <th>Product Details</th>
-                <th width="40">Qty</th>
-                <th width="70">Unit<br>Price</th>
-                <th width="80">Total<br>Price</th>
-                <th>Remark</th>
+                <th class="pr">Price</th>
+                <th class="rm">Remark</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($products as $index => $product)
             <tr>
-                <td align="center">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                <td class="sn" style="font-size:14px;">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</td>
                 <td>
-                    <strong>{{ $product->title }}</strong><br>
-                    <ul class="spec-list">
-                        @if($product->brand)
-                        <li>Brand : {{ $product->brand }}</li>
-                        @endif
-                        @if($product->model)
-                        <li>Model : {{ $product->model }}</li>
-                        @endif
-                        @if($product->origin)
-                        <li>Origin : {{ $product->origin }}</li>
-                        @endif
-                        @if($product->warranty)
-                        <li>Warranty : {{ $product->warranty }}</li>
-                        @endif
-                    </ul>
-                    @if($product->features)
-                        <div style="margin-top: 8px;">
-                            <strong>Features:</strong>
-                            <div style="font-size: 11px;">{!! $product->features !!}</div>
-                        </div>
-                    @endif
-                    @if($product->installation_charge > 0)
-                        <div style="margin-top: 8px; font-weight: bold;">
-                            Installation Charge {{ number_format($product->installation_charge, 0) }} TK Need To Pay By The Buyer
-                        </div>
-                    @endif
-                </td>
-                <td align="center">
-                    {{ $product->custom_quantity }}
-                </td>
-                <td class="price-col" style="text-align: right; width: auto;">
-                    @if($product->custom_price > 0)
-                        {{ number_format($product->custom_price, 2) }}
-                    @else
-                        --
-                    @endif
-                </td>
-                <td class="price-col" style="text-align: right; width: auto;">
-                    @php $rowTotal = $product->custom_price * $product->custom_quantity; $grandTotal += $rowTotal; @endphp
-                    @if($rowTotal > 0)
-                        {{ number_format($rowTotal, 2) }}
-                    @else
-                        --
-                    @endif
-                </td>
-                <td class="remark-col">{{ $product->stock_status == 'in_stock' ? 'Ready stock' : 'On order' }}</td>
-            </tr>
-            @endforeach
+                    <div class="pname">{{ $product->title }}</div>
+                    <div class="pmeta">
+                        @if($product->brand)   <div><span>Brand</span>    :&nbsp;{{ $product->brand }}</div>@endif
+                        @if($product->model)   <div><span>Model</span>    :&nbsp;{{ $product->model }}</div>@endif
+                        @if($product->origin)  <div><span>Origin</span>   :&nbsp;{{ $product->origin }}</div>@endif
+                        @if($product->warranty)<div><span>Warranty</span> :&nbsp;{{ $product->warranty }}</div>@endif
+                        @if($product->assembly)<div><span>Assembly</span> :&nbsp;{{ $product->assembly }}</div>@endif
+                    </div>
 
-            {{-- Grand Total Row --}}
-            @if($grandTotal > 0)
-            <tr class="total-row">
-                <td colspan="4" style="text-align: right; font-weight: bold;">Total Estimated Amount:</td>
-                <td class="price-col" style="text-align: right; width: auto;">{{ number_format($grandTotal, 2) }}</td>
-                <td></td>
+                    @if($product->image)
+                        @php $imgSrc = str_starts_with($product->image,'http') ? $product->image : public_path('storage/'.$product->image); @endphp
+                        <img src="{{ $imgSrc }}" class="pimg" alt="{{ $product->title }}">
+                    @endif
+
+                    @if($product->features)
+                        <div class="fhd">Features:</div>
+                        <ul class="flist">
+                            @foreach(array_filter(array_map('trim', explode("\n", strip_tags($product->features)))) as $feat)
+                                <li>{{ $feat }}</li>
+                            @endforeach
+                        </ul>
+                    @elseif($product->specifications && is_array($product->specifications) && count($product->specifications))
+                        <div class="fhd">Technical Specification</div>
+                        <table class="spec-tbl">
+                            @foreach($product->specifications as $k => $v)
+                                <tr><td>{{ $k }}</td><td>: {{ $v }}</td></tr>
+                            @endforeach
+                        </table>
+                    @endif
+
+                    @if(!empty($product->installation_charge) && $product->installation_charge > 0)
+                        <p class="inst-note">Installation Charge &nbsp; {{ number_format($product->installation_charge, 0) }} TK Need To Pay By The Buyer</p>
+                    @endif
+                </td>
+                <td class="pr">
+                    @php $price = $product->custom_price ?? $product->price; @endphp
+                    @if($price > 0) {{ number_format($price * ($product->custom_quantity ?? 1), 2) }} @else — @endif
+                </td>
+                <td class="rm">
+                    {{ ($product->stock_status === 'in_stock' || !$product->stock_status) ? 'Ready stock' : ucfirst(str_replace('_',' ',$product->stock_status)) }}
+                </td>
             </tr>
-            @endif
         </tbody>
     </table>
+</div>
+@endforeach
 
-    {{-- Terms & Conditions --}}
-    <div class="content-section">
-        
-        @if(isset($termConditions) && $termConditions->count() > 0)
-            @foreach($termConditions as $term)
-                <p><strong>{{ $term->title }}</strong></p>
-                <div style="font-size: 12px; margin-bottom: 15px;">{!! $term->content !!}</div>
-            @endforeach
-        @else
-            <p><strong>Terms and condition</strong></p>
-            <table class="terms-table">
-                <tr><td width="100">Price</td><td>: In BDT excluding all local Vat, taxes and charges. Any deduction will be added.</td></tr>
-                <tr><td>Delivery</td><td>: 05 (Five) Days from the date of confirm order.</td></tr>
-                <tr><td>Warranty</td><td>: 12 (Twelve) months from the date of successful installation.</td></tr>
-                <tr><td>Installation</td><td>: By our Technical Personnel at free of cost.</td></tr>
-                <tr><td>Training</td><td>: We will provide operational training to the Operator/End user up to their satisfaction.</td></tr>
-                <tr><td>Spare Parts</td><td>: To be supplied on demand at mutually agreed prices.</td></tr>
-                <tr><td>Validity</td><td>: 05 (Five) days from quoting date.</td></tr>
-                <tr><td>Transport Cost</td><td>: Every type transport cost will pay by buyer.</td></tr>
-            </table>
-        @endif
-    </div>
+<div class="pb"></div>
 
-    <div class="content-section">
-        <p>Therefore, we hope, you will find our offer reasonable and look forward to your valued order as and when required. Thanking you for your kind support with best regards.</p>
-        <p><strong>We assure you that of our best Engineering support at all time.</strong></p>
-        <p>Thanking You.</p>
+{{-- ══════════════════════════════════════════════════
+     LAST PAGE — TERMS & CONDITIONS
+══════════════════════════════════════════════════ --}}
+<div class="lh"><div class="lh-inner">
+    <div class="lh-logo">
+        @if($settings->logo)<img src="{{ public_path('storage/'.$settings->logo) }}" alt="Logo">@endif
     </div>
+    <div class="lh-co">
+        <div class="co-name">{{ strtoupper($settings->site_title ?? 'SLOPE MEDICAL SOLUTION') }}</div>
+        <div class="co-tag">Run for Rise</div>
+    </div>
+</div></div>
 
-    {{-- Signature --}}
-    <div class="signature-section">
-        <div class="signature-box">
-            <p>Sincerely yours</p>
-            <div style="height: 50px; margin-bottom: 5px;">
-                @if($settings->signature)
-                    <img src="{{ public_path('storage/' . $settings->signature) }}" style="max-height: 50px;">
-                @endif
-            </div>
-            <strong>{{ $preparedBy }}</strong><br>
-            Managing Director<br>
-            Cell: {{ $settings->phone ?? '01717589756' }}<br>
-            {{ $settings->site_title ?? 'Slope Medical Solution' }}<br>
-            <span style="font-size: 11px;">{{ $settings->address ?? '59/D-A Darussalam Tower, Shop No-31(Ground Floor), Darussalam, Dhaka' }}</span>
-        </div>
+<div class="tc-title"><u><i>Terms and condition</i></u></div>
+
+@if(isset($termConditions) && $termConditions->count() > 0)
+<table class="tc-tbl">
+    @foreach($termConditions as $tc)
+    <tr>
+        <td>{{ $tc->title }}</td>
+        <td>: {{ $tc->content }}</td>
+    </tr>
+    @endforeach
+</table>
+@else
+<table class="tc-tbl">
+    <tr><td>Price</td>          <td>: In BDT excluding all local Vat, taxes and charges. Any deduction will be added.</td></tr>
+    <tr><td>Delivery</td>       <td>: 05 (Five) Days from the date of confirm order.</td></tr>
+    <tr><td>Warranty</td>       <td>: 12 (Twelve) months from the date of successful installation.</td></tr>
+    <tr><td>Installation</td>   <td>: By our Technical Personnel at free of cost.</td></tr>
+    <tr><td>Training</td>       <td>: We will provide operational training to the Operator/End user up to their satisfaction.</td></tr>
+    <tr><td>Spare Parts</td>    <td>: To be supplied on demand at mutually agreed prices.</td></tr>
+    <tr><td>Validity</td>       <td>: 05 (Five) days from quoting date.</td></tr>
+    <tr><td>Transport Cost</td> <td>: Every type transport cost will pay by byer.</td></tr>
+</table>
+@endif
+
+<div class="tc-closing">
+    Therefore, we hope, you will find our offer reasonable and look forward to your valued order as and when required.
+    Thanking you for your kind support with best regards.
+</div>
+<p class="tc-assur">We assure you that of our best Engineering support at all time.</p>
+<p style="font-weight:bold;margin-top:10px;">Thanking You.</p>
+<br><br><br>
+
+<div class="sig">
+    <p>Sincerely yours</p>
+    @if($settings->signature)
+        <img src="{{ public_path('storage/'.$settings->signature) }}" alt="Signature">
+    @else
+        <br><br><br>
+    @endif
+    <p class="sn">{{ $settings->md_name ?? $preparedBy }}</p>
+    <div class="sd">
+        Managing Director<br>
+        @if(!empty($settings->md_phone))Cell: {{ $settings->md_phone }}<br>@endif
+        <strong>{{ $settings->site_title ?? 'Slope Medical Solution' }}</strong><br>
+        {{ $settings->address ?? '' }}
     </div>
+</div>
+
 </body>
-
 </html>

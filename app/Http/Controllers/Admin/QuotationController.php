@@ -33,16 +33,18 @@ class QuotationController extends Controller
     public function generate(Request $request)
     {
         $request->validate([
-            'product_ids'       => 'required|array',
-            'product_ids.*'     => 'exists:products,id',
-            'quantities'        => 'nullable|array',
-            'prices'            => 'nullable|array',
-            'quotation_title'   => 'nullable|string|max:255',
-            'client_designation'=> 'nullable|string|max:255',
-            'client_name'       => 'nullable|string|max:255',
-            'client_address'    => 'nullable|string|max:500',
-            'client_phone'      => 'nullable|string|max:50',
-            'prepared_by'       => 'nullable|string|max:255',
+            'product_ids'        => 'required|array',
+            'product_ids.*'      => 'exists:products,id',
+            'quantities'         => 'nullable|array',
+            'prices'             => 'nullable|array',
+            'quotation_title'    => 'nullable|string|max:255',
+            'client_designation' => 'nullable|string|max:255',
+            'client_name'        => 'nullable|string|max:255',
+            'client_address'     => 'nullable|string|max:500',
+            'client_phone'       => 'nullable|string|max:50',
+            'prepared_by'        => 'nullable|string|max:255',
+            'term_ids'           => 'nullable|array',
+            'term_ids.*'         => 'exists:term_and_conditions,id',
         ]);
 
         $products  = \App\Models\Product::whereIn('id', $request->product_ids)->with('category')->get();
@@ -55,7 +57,12 @@ class QuotationController extends Controller
         });
 
         $settings  = \App\Models\GeneralSetting::first() ?? new \App\Models\GeneralSetting();
-        $termConditions = \App\Models\TermAndCondition::where('is_active', true)->get();
+        // Use selected T&C if chosen in modal, otherwise fall back to all active
+        if ($request->filled('term_ids')) {
+            $termConditions = \App\Models\TermAndCondition::whereIn('id', $request->term_ids)->get();
+        } else {
+            $termConditions = \App\Models\TermAndCondition::where('is_active', true)->get();
+        }
 
         // Auto-generate ref ID: Slope/Q-001/2026
         $lastId    = Quotation::max('id') ?? 0;
@@ -78,13 +85,14 @@ class QuotationController extends Controller
         \Illuminate\Support\Facades\Storage::disk('public')->put('quotations/' . $fileName, $pdf->output());
 
         Quotation::create([
-            'title'         => $title,
-            'file_path'     => 'quotations/' . $fileName,
-            'ref_id'        => $refId,
-            'client_name'   => $request->client_name,
-            'client_address'=> $request->client_address,
-            'client_phone'  => $request->client_phone,
-            'prepared_by'   => $preparedBy,
+            'title'          => $title,
+            'file_path'      => 'quotations/' . $fileName,
+            'ref_id'         => $refId,
+            'client_name'    => $request->client_name,
+            'client_address' => $request->client_address,
+            'client_phone'   => $request->client_phone,
+            'prepared_by'    => $preparedBy,
+            'status'         => 'pending',
         ]);
 
         return redirect()->route('admin.quotations.index')->with('success', 'Quotation ' . $refId . ' generated successfully.');
@@ -92,8 +100,14 @@ class QuotationController extends Controller
 
     public function show(Quotation $quotation)
     {
-        // Actually, we can either return the PDF view or download it directly
         return response()->download(storage_path('app/public/' . $quotation->file_path));
+    }
+
+    public function updateStatus(Request $request, Quotation $quotation)
+    {
+        $request->validate(['status' => 'required|in:pending,on_progress,complete']);
+        $quotation->update(['status' => $request->status]);
+        return back()->with('success', 'Status updated to ' . ucfirst(str_replace('_', ' ', $request->status)) . '.');
     }
 
     public function destroy(Quotation $quotation)

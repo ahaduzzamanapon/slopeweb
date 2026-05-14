@@ -41,14 +41,14 @@ class GeneralSettingController extends Controller
 
         if ($request->hasFile('logo')) {
             if ($settings->logo) {
-                Storage::delete($settings->logo);
+                Storage::disk('public')->delete($settings->logo);
             }
             $data['logo'] = $request->file('logo')->store('settings', 'public');
         }
 
         if ($request->hasFile('hero_image')) {
             if ($settings->hero_image) {
-                Storage::delete($settings->hero_image);
+                Storage::disk('public')->delete($settings->hero_image);
             }
             $data['hero_image'] = $request->file('hero_image')->store('settings', 'public');
         }
@@ -62,7 +62,7 @@ class GeneralSettingController extends Controller
 
         if ($request->hasFile('signature')) {
             if ($settings->signature) {
-                Storage::delete($settings->signature);
+                Storage::disk('public')->delete($settings->signature);
             }
             $data['signature'] = $request->file('signature')->store('settings', 'public');
         }

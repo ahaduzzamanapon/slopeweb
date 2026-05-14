@@ -106,8 +106,11 @@
         <div class="container mx-auto px-4 h-20 flex items-center justify-between">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center gap-2">
-                <img src="{{ asset('storage/' . $globalSettings->logo) }}" alt="Slope Logo" class="h-10">
-                {{-- <span class="text-3xl font-bold text-primary tracking-tight">Slope M</span> --}}
+                @if($globalSettings->logo)
+                    <img src="{{ asset('storage/' . $globalSettings->logo) }}" alt="Slope Logo" class="h-10">
+                @else
+                    <span class="text-2xl font-bold text-primary tracking-tight">Slope</span>
+                @endif
             </a>
 
             <!-- Desktop Navigation -->
@@ -226,7 +229,7 @@
                     <ul class="space-y-3 text-blue-100 text-sm">
                         <li><a href="{{ route('about') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> About Us</a></li>
                         <li><a href="{{ route('about.md_message') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> Message From Managing Director</a></li>
-                        <li><a href="{{ route('contact') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> Our Branches</a></li>
+                        <li><a href="{{ route('branches') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> Our Branches</a></li>
                     </ul>
                 </div>
 

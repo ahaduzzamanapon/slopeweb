@@ -22,6 +22,11 @@ class PageController extends Controller
         return view('frontend.pages.clients');
     }
 
+    public function branches()
+    {
+        return view('frontend.pages.branches');
+    }
+
     public function mdMessage()
     {
         return view('frontend.pages.md_message');

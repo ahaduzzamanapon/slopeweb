@@ -25,11 +25,21 @@ class FrontendController extends Controller
             ->limit(8)
             ->get();
 
-        $sliders = \App\Models\Slider::where('active', true)->orderBy('order')->get();
-        $services = \App\Models\Service::where('active', true)->orderBy('order')->limit(4)->get();
-        $testimonials = \App\Models\Testimonial::where('active', true)->orderBy('order')->get();
+        // Fallback: if no featured products, show all active products
+        if ($featuredProducts->isEmpty()) {
+            $featuredProducts = Product::where('active', true)
+                ->with('category')
+                ->orderBy('order')
+                ->limit(8)
+                ->get();
+        }
 
-        return view('frontend.home', compact('settings', 'categories', 'featuredProducts', 'sliders', 'services', 'testimonials'));
+        $sliders      = \App\Models\Slider::where('active', true)->orderBy('order')->get();
+        $services     = \App\Models\Service::where('active', true)->orderBy('order')->limit(4)->get();
+        $testimonials = \App\Models\Testimonial::where('active', true)->orderBy('order')->get();
+        $clients      = \App\Models\Client::where('active', true)->orderBy('order')->get();
+
+        return view('frontend.home', compact('settings', 'categories', 'featuredProducts', 'sliders', 'services', 'testimonials', 'clients'));
     }
     public function productsIndex(Request $request)
     {

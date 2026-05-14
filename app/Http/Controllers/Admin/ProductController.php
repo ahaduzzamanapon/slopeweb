@@ -96,7 +96,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             if ($product->image) {
-                Storage::delete($product->image);
+                Storage::disk('public')->delete($product->image);
             }
             $data['image'] = $request->file('image')->store('products', 'public');
         }
@@ -116,7 +116,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->image) {
-            Storage::delete($product->image);
+            Storage::disk('public')->delete($product->image);
         }
         $product->delete();
         return back()->with('success', 'Product deleted successfully.');

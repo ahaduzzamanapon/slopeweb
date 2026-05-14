@@ -50,6 +50,41 @@
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t to-transparent"></div>
     </section>
 
+    {{-- Client Logo Ticker --}}
+    @php $tickerClients = \App\Models\Client::where('active', true)->orderBy('order')->get(); @endphp
+    @if($tickerClients->count())
+    <section class="py-4 bg-white border-y border-slate-100 overflow-hidden">
+        <div class="relative flex overflow-x-hidden">
+            <div class="flex animate-scroll gap-8 whitespace-nowrap items-center" style="animation: ticker 30s linear infinite;">
+                @foreach($tickerClients as $cl)
+                <a href="{{ route('about.clients') }}" class="inline-flex flex-col items-center gap-2 px-6 shrink-0 hover:opacity-75 transition-opacity">
+                    @if($cl->logo)
+                        <img src="{{ \Illuminate\Support\Str::startsWith($cl->logo,'http') ? $cl->logo : asset('storage/'.$cl->logo) }}"
+                             alt="{{ $cl->name }}" class="h-12 w-auto object-contain grayscale hover:grayscale-0 transition-all">
+                    @endif
+                    <span class="text-xs text-slate-500 font-medium">{{ $cl->name }}</span>
+                </a>
+                @endforeach
+                {{-- Duplicate for seamless loop --}}
+                @foreach($tickerClients as $cl)
+                <a href="{{ route('about.clients') }}" class="inline-flex flex-col items-center gap-2 px-6 shrink-0 hover:opacity-75 transition-opacity">
+                    @if($cl->logo)
+                        <img src="{{ \Illuminate\Support\Str::startsWith($cl->logo,'http') ? $cl->logo : asset('storage/'.$cl->logo) }}"
+                             alt="{{ $cl->name }}" class="h-12 w-auto object-contain grayscale hover:grayscale-0 transition-all">
+                    @endif
+                    <span class="text-xs text-slate-500 font-medium">{{ $cl->name }}</span>
+                </a>
+                @endforeach
+            </div>
+        </div>
+        <style>
+            @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+            .animate-scroll { animation: ticker 30s linear infinite; }
+            .animate-scroll:hover { animation-play-state: paused; }
+        </style>
+    </section>
+    @endif
+
     <!-- Why Choose Us Section -->
     <section class="py-32 bg-white relative overflow-hidden">
         <div class="container mx-auto px-4 relative z-10">
@@ -242,7 +277,7 @@
 
             <!-- View All CTA -->
             <div class="mt-20 text-center">
-                <a href="#"
+                <a href="{{ route('products.index') }}"
                     class="inline-flex items-center gap-3 px-10 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all group">
                     View All Products
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform"
@@ -255,4 +290,85 @@
         </div>
     </section>
 
-@endsection
+    <!-- Catalogue Download Section -->
+    <section class="py-20 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png')"></div>
+        <div class="container mx-auto px-4 relative z-10 text-center fade-up">
+            <div class="text-accent text-5xl mb-4">📋</div>
+            <h2 class="text-3xl md:text-4xl font-display font-extrabold text-white mb-4">Download Our Product Catalogue</h2>
+            <p class="text-blue-200 text-lg mb-8 max-w-xl mx-auto">Get the full catalogue of our medical equipment with specifications and pricing.</p>
+            <button onclick="document.getElementById('catalogueModal').classList.remove('hidden')"
+                class="px-10 py-4 bg-accent text-slate-900 font-bold rounded-full hover:bg-yellow-400 transition-all shadow-xl shadow-yellow-500/30 hover:-translate-y-1 transform active:scale-95">
+                Download Catalogue
+            </button>
+        </div>
+    </section>
+
+    <!-- Catalogue Download Modal -->
+    <div id="catalogueModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative fade-up">
+            <button onclick="document.getElementById('catalogueModal').classList.add('hidden')"
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors text-2xl leading-none">&times;</button>
+            <div class="text-center mb-6">
+                <div class="text-4xl mb-3">📥</div>
+                <h3 class="text-2xl font-display font-bold text-slate-900">Get the Catalogue</h3>
+                <p class="text-slate-500 text-sm mt-1">Please enter your details to download.</p>
+            </div>
+            <form action="{{ route('catalogue.download') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Your Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="name" required placeholder="e.g. Dr. Rahman"
+                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Mobile Number <span class="text-red-500">*</span></label>
+                    <input type="tel" name="phone" required placeholder="+880..."
+                        class="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
+                </div>
+                <button type="submit"
+                    class="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-opacity-90 transition-all shadow-lg shadow-primary/30">
+                    📥 Download Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Our Clients Section -->
+    @if(isset($clients) && $clients->count())
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 fade-up">
+                <h2 class="text-3xl md:text-4xl font-display font-extrabold text-slate-900 mb-4">
+                    Our <span class="text-gradient">Trusted Clients</span>
+                </h2>
+                <div class="w-20 h-2 bg-gradient-to-r from-primary to-accent mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
+                @foreach($clients as $index => $client)
+                <div class="bg-slate-50 rounded-2xl p-5 flex flex-col items-center justify-center border border-slate-100 hover:border-primary/20 hover:shadow-lg hover:-translate-y-1 transition-all duration-400 group fade-up"
+                    style="transition-delay: {{ $index * 50 }}ms">
+                    <div class="w-16 h-16 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-3 overflow-hidden group-hover:border-primary/30 transition-colors shadow-sm">
+                        @if($client->logo)
+                            <img src="{{ Str::startsWith($client->logo, 'http') ? $client->logo : asset('storage/'.$client->logo) }}"
+                                alt="{{ $client->name }}" class="w-full h-full object-cover">
+                        @else
+                            <span class="text-xl font-bold text-primary">{{ strtoupper(substr($client->name,0,1)) }}</span>
+                        @endif
+                    </div>
+                    <p class="text-xs font-semibold text-slate-700 text-center group-hover:text-primary transition-colors leading-tight">
+                        {{ $client->name }}
+                    </p>
+                </div>
+                @endforeach
+            </div>
+            <div class="text-center mt-10">
+                <a href="{{ route('about.clients') }}" class="text-primary font-bold text-sm hover:underline">
+                    View All Clients →
+                </a>
+            </div>
+        </div>
+    </section>
+    @endif
+
+@endsection

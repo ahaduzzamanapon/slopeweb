@@ -14,5 +14,6 @@ class Quotation extends Model
         'client_address',
         'client_phone',
         'prepared_by',
+        'status',
     ];
 }

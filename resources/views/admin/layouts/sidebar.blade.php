@@ -60,6 +60,12 @@
             </li>
 
             <li class="nav-item">
+                <a href="{{ route('admin.branches.index') }}" class="nav-link {{ request()->routeIs('admin.branches.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center"><i class="bi bi-geo-alt me-2"></i> Branches</div>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="{{ route('admin.testimonials.index') }}" class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center"><i class="bi bi-chat-quote me-2"></i> Success Stories</div>
                 </a>

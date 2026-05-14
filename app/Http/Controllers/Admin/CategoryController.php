@@ -61,7 +61,7 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             if ($category->image) {
-                Storage::delete($category->image);
+                Storage::disk('public')->delete($category->image);
             }
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
@@ -74,8 +74,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->image) {
-            Storage::delete($category->image);
-        }
+                Storage::disk('public')->delete($category->image);
+            }
         $category->delete();
         return back()->with('success', 'Category deleted successfully.');
     }

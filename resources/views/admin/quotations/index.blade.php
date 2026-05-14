@@ -30,7 +30,8 @@
                         <th>Title</th>
                         <th>Client</th>
                         <th>Prepared By</th>
-                        <th>Date generated</th>
+                        <th>Status</th>
+                        <th>Date</th>
                         <th width="200">Actions</th>
                     </tr>
                 </thead>
@@ -42,6 +43,17 @@
                             <td>{{ $quotation->title }}</td>
                             <td>{{ $quotation->client_name }}</td>
                             <td>{{ $quotation->prepared_by }}</td>
+                            <td>
+                                <form action="{{ route('admin.quotations.updateStatus', $quotation) }}" method="POST" class="d-inline-flex align-items-center gap-1">
+                                    @csrf
+                                    @method('PATCH')
+                                    <select name="status" class="form-select form-select-sm" style="width:130px;" onchange="this.form.submit()">
+                                        <option value="pending"     {{ $quotation->status === 'pending'     ? 'selected' : '' }}>⏳ Pending</option>
+                                        <option value="on_progress" {{ $quotation->status === 'on_progress' ? 'selected' : '' }}>🔄 On Progress</option>
+                                        <option value="complete"    {{ $quotation->status === 'complete'    ? 'selected' : '' }}>✅ Complete</option>
+                                    </select>
+                                </form>
+                            </td>
                             <td>{{ $quotation->created_at->format('M d, Y h:i A') }}</td>
                             <td>
                                 <a href="{{ asset('storage/' . $quotation->file_path) }}" target="_blank" class="btn btn-sm btn-info text-white">
@@ -57,7 +69,7 @@
                     @endforeach
                     @if($quotations->isEmpty())
                         <tr>
-                            <td colspan="7" class="text-center">No quotations generated yet.</td>
+                            <td colspan="8" class="text-center">No quotations generated yet.</td>
                         </tr>
                     @endif
                 </tbody>

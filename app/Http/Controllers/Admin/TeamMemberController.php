@@ -37,6 +37,7 @@ class TeamMemberController extends Controller
             $data['image'] = $request->file('image')->store('team', 'public');
         }
 
+        $data['active'] = $request->has('active');
         TeamMember::create($data);
         return redirect()->route('admin.team.index')->with('success', 'Team Member added successfully.');
     }

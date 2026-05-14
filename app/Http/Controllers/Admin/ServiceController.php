@@ -65,7 +65,7 @@ class ServiceController extends Controller
 
         if ($request->hasFile('image')) {
             if ($service->image) {
-                Storage::delete($service->image);
+                Storage::disk('public')->delete($service->image);
             }
             $data['image'] = $request->file('image')->store('services', 'public');
         }
@@ -78,8 +78,8 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         if ($service->image) {
-            Storage::delete($service->image);
-        }
+                Storage::disk('public')->delete($service->image);
+            }
         $service->delete();
         return back()->with('success', 'Service deleted successfully.');
     }

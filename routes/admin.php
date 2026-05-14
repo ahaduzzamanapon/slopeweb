@@ -31,10 +31,12 @@ Route::prefix('admin')->group(function () {
         Route::resource('testimonials', App\Http\Controllers\Admin\TestimonialController::class)->names('admin.testimonials');
         Route::resource('terms-and-conditions', App\Http\Controllers\Admin\TermAndConditionController::class)->names('admin.terms-and-conditions');
         Route::post('quotations/generate-pdf', [App\Http\Controllers\Admin\QuotationController::class, 'generate'])->name('admin.quotations.generate');
+        Route::patch('quotations/{quotation}/status', [App\Http\Controllers\Admin\QuotationController::class, 'updateStatus'])->name('admin.quotations.updateStatus');
         Route::get('quotations/generate-pdf', function() {
             return redirect()->route('admin.products.index')->with('error', 'Please select products first.');
         });
         Route::resource('quotations', App\Http\Controllers\Admin\QuotationController::class)->names('admin.quotations');
+        Route::resource('branches', App\Http\Controllers\Admin\BranchController::class)->names('admin.branches');
 
         Route::post('menus/order', [\App\Http\Controllers\Admin\MenuController::class, 'updateOrder'])->name('admin.menus.order');
         Route::resource('menus', \App\Http\Controllers\Admin\MenuController::class)->names('admin.menus');
