@@ -4,18 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Quotation - {{ $refId }}</title>
 <style>
-    @page { margin: 2.5cm 0cm 3cm 0cm; }
+    @page { margin: 3cm 0cm 3.5cm 0cm; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px; }
 
     /* ── LETTERHEAD ─────────────────────────────── */
-    .lh { width:100%; border-bottom:4px solid #c00; padding-bottom:8px; margin-bottom:16px; }
-    .lh-inner { display:table; width:100%; }
-    .lh-logo { display:table-cell; width:180px; vertical-align:middle; }
-    .lh-logo img { width:165px; height:auto; }
-    .lh-co { display:table-cell; vertical-align:middle; text-align:right; }
-    .lh-co .co-name { font-size:32px; font-weight:bold; color:#1a3a8f; letter-spacing:1.5px; line-height:1.1; }
-    .lh-co .co-tag  { font-size:15px; color:#444; font-style:italic; margin-top:3px; }
+    .lh { width:100%; border-bottom:4px solid #c00; padding-bottom:8px; margin-bottom:16px; text-align:center; }
+    .lh img { max-width:100%; height:auto; }
 
     /* ── FOOTER (fixed) ──────────────────────────── */
     .pg-footer {
@@ -81,15 +76,9 @@
 {{-- ══════════════════════════════════════════════════
      PAGE 1 — COVER LETTER
 ══════════════════════════════════════════════════ --}}
-<div class="lh"><div class="lh-inner">
-    <div class="lh-logo">
-        @if($settings->logo)<img src="{{ public_path('storage/'.$settings->logo) }}" alt="Logo">@endif
-    </div>
-    <div class="lh-co">
-        <div class="co-name">{{ strtoupper($settings->site_title ?? 'SLOPE MEDICAL SOLUTION') }}</div>
-        <div class="co-tag">Run for Rise</div>
-    </div>
-</div></div>
+<div class="lh">
+    <img src="{{ public_path('q_header_image.png') }}" alt="Slope Medical Solution">
+</div>
 
 <div class="cov-title"><u><i>Quotation</i></u></div>
 
@@ -143,15 +132,9 @@
 @foreach($products as $i => $product)
 <div class="{{ !$loop->last ? 'pb' : '' }}">
 
-    <div class="lh"><div class="lh-inner">
-        <div class="lh-logo">
-            @if($settings->logo)<img src="{{ public_path('storage/'.$settings->logo) }}" alt="Logo">@endif
-        </div>
-        <div class="lh-co">
-            <div class="co-name">{{ strtoupper($settings->site_title ?? 'SLOPE MEDICAL SOLUTION') }}</div>
-            <div class="co-tag">Run for Rise</div>
-        </div>
-    </div></div>
+    <div class="lh">
+        <img src="{{ public_path('q_header_image.png') }}" alt="Slope Medical Solution">
+    </div>
 
     <table class="ptbl">
         <thead>
@@ -218,15 +201,9 @@
 {{-- ══════════════════════════════════════════════════
      LAST PAGE — TERMS & CONDITIONS
 ══════════════════════════════════════════════════ --}}
-<div class="lh"><div class="lh-inner">
-    <div class="lh-logo">
-        @if($settings->logo)<img src="{{ public_path('storage/'.$settings->logo) }}" alt="Logo">@endif
-    </div>
-    <div class="lh-co">
-        <div class="co-name">{{ strtoupper($settings->site_title ?? 'SLOPE MEDICAL SOLUTION') }}</div>
-        <div class="co-tag">Run for Rise</div>
-    </div>
-</div></div>
+<div class="lh">
+    <img src="{{ public_path('q_header_image.png') }}" alt="Slope Medical Solution">
+</div>
 
 <div class="tc-title"><u><i>Terms and condition</i></u></div>
 
