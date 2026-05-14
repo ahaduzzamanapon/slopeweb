@@ -124,8 +124,9 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="border-bottom-0 py-2">Product</th>
-                                        <th width="120" class="border-bottom-0 py-2 text-center">Qty</th>
-                                        <th width="180" class="border-bottom-0 py-2 text-end">Price</th>
+                                        <th width="100" class="border-bottom-0 py-2 text-center">Qty</th>
+                                        <th width="150" class="border-bottom-0 py-2 text-end">Unit Price</th>
+                                        <th width="150" class="border-bottom-0 py-2 text-end">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="selected_products_tbody">
@@ -147,7 +148,7 @@
                                 <input class="form-check-input tc-check flex-shrink-0" type="checkbox" value="{{ $term->id }}" id="tc_{{ $term->id }}" checked style="width:18px;height:18px;">
                                 <label class="fw-bold mb-0 fs-6" for="tc_{{ $term->id }}">{{ $term->title }}</label>
                             </div>
-                            <textarea id="tc_content_{{ $term->id }}" rows="3" class="form-control" style="font-size:13px;">{{ $term->content }}</textarea>
+                            <textarea id="tc_content_{{ $term->id }}" rows="5" class="form-control" style="font-size:13px; resize:vertical;">{{ $term->content }}</textarea>
                         </div>
                         @endforeach
                     </div>
@@ -172,6 +173,13 @@
     const quotationModal = new bootstrap.Modal(document.getElementById('quotationModal'));
     const mainForm = document.querySelector('form[action="{{ route("admin.quotations.generate") }}"]');
 
+    function updateTotal(id) {
+        let qty   = parseFloat(document.getElementById(`qty_${id}`).value)   || 0;
+        let price = parseFloat(document.getElementById(`price_${id}`).value) || 0;
+        let cell  = document.getElementById(`total_${id}`);
+        if (cell) cell.textContent = (qty * price).toLocaleString('en-BD', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+
     document.getElementById('openQuotationModal').addEventListener('click', function() {
         const selected = document.querySelectorAll('.product-checkbox:checked');
         if (selected.length === 0) {
@@ -184,17 +192,22 @@
         
         selected.forEach(cb => {
             let title = cb.getAttribute('data-title');
-            let price = cb.getAttribute('data-price') || 0;
-            let id = cb.value;
+            let price = parseFloat(cb.getAttribute('data-price')) || 0;
+            let id    = cb.value;
+            let total = price;
             
-            // Note: Since these inputs will be appended to DOM inside the modal,
-            // they wouldn't naturally submit with the form if the modal is outside the form.
-            // But wait! The modal is entirely *outside* the form. We need to handle this.
             tbody.innerHTML += `
                 <tr>
                     <td class="fw-medium" title="${title}">${title}</td>
-                    <td style="width: 120px;"><input type="number" id="qty_${id}" class="form-control text-center" value="1" min="1" style="width: 100%;"></td>
-                    <td style="width: 180px;"><input type="number" id="price_${id}" step="0.01" class="form-control text-end" value="${price}" style="width: 100%;"></td>
+                    <td style="width:100px;">
+                        <input type="number" id="qty_${id}" class="form-control form-control-sm text-center" value="1" min="1"
+                            oninput="updateTotal('${id}')">
+                    </td>
+                    <td style="width:150px;">
+                        <input type="number" id="price_${id}" step="0.01" class="form-control form-control-sm text-end" value="${price}"
+                            oninput="updateTotal('${id}')">
+                    </td>
+                    <td id="total_${id}" style="width:150px;" class="text-end fw-bold">${total.toLocaleString('en-BD', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
                 </tr>
             `;
         });
