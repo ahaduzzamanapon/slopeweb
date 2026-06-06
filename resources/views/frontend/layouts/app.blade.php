@@ -172,6 +172,8 @@
 
                 <a href="{{ route('services') }}" class="hover:text-primary transition-colors py-2 {{ request()->routeIs('services*') ? 'text-primary border-b-2 border-primary' : '' }}">Services</a>
 
+                <a href="{{ route('projects') }}" class="hover:text-primary transition-colors py-2 {{ request()->routeIs('projects*') ? 'text-primary border-b-2 border-primary' : '' }}">Projects</a>
+
                 <a href="{{ route('contact') }}" class="hover:text-primary transition-colors py-2 {{ request()->routeIs('contact') ? 'text-primary border-b-2 border-primary' : '' }}">Contact Us</a>
 
                 <a href="{{ route('contact') }}?subject=Quotation" class="px-5 py-2 bg-accent text-slate-900 rounded font-semibold hover:bg-yellow-400 transition-colors shadow-lg shadow-yellow-200 whitespace-nowrap">Ask For Quotation</a>
@@ -231,6 +233,7 @@
                         <li><a href="{{ route('about') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> About Us</a></li>
                         <li><a href="{{ route('about.md_message') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> Message From Managing Director</a></li>
                         <li><a href="{{ route('branches') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> Our Branches</a></li>
+                        <li><a href="{{ route('projects') }}" class="hover:text-accent transition-colors flex items-center gap-2"><span class="text-accent">›</span> Our Projects</a></li>
                     </ul>
                 </div>
 

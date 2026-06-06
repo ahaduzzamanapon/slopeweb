@@ -15,6 +15,7 @@ Route::controller(\App\Http\Controllers\PageController::class)->group(function (
     Route::get('/about/message-from-md', 'mdMessage')->name('about.md_message');
     Route::get('/branches', 'branches')->name('branches');
     Route::get('/services', 'services')->name('services');
+    Route::get('/projects', 'projects')->name('projects');
     Route::get('/contact-us', 'contact')->name('contact');
     Route::post('/contact-us', 'contactPost')->name('contact.post');
 });

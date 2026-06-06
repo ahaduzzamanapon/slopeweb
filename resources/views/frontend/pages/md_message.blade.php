@@ -9,7 +9,7 @@
         </div>
         <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-slate-900/90 mix-blend-multiply"></div>
         <div class="container mx-auto px-6 relative z-10 text-center fade-up">
-            <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-6 tracking-tight">Message from MD</h1>
+            <h1 class="text-4xl md:text-6xl font-display font-extrabold text-white mb-6 tracking-tight">Message from Managing Director</h1>
             <div class="w-20 h-1.5 bg-accent mx-auto rounded-full shadow-sm"></div>
         </div>
     </section>

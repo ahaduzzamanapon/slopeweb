@@ -38,6 +38,12 @@ class PageController extends Controller
         return view('frontend.pages.services', compact('services'));
     }
 
+    public function projects()
+    {
+        $projects = \App\Models\Project::where('active', true)->orderBy('order')->get();
+        return view('frontend.pages.projects', compact('projects'));
+    }
+
     public function contact()
     {
         return view('frontend.pages.contact');
