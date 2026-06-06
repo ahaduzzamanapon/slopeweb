@@ -9,13 +9,13 @@
     body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px; }
 
     /* ── LETTERHEAD ─────────────────────────────── */
-    .lh { width:100%; border-bottom:4px solid #c00; padding-bottom:8px; margin-bottom:16px; text-align:center; }
+    .lh { width:100%; border-bottom:4px solid #1a3a8f; padding-bottom:8px; margin-bottom:16px; text-align:center; }
     .lh img { max-width:100%; height:auto; }
 
     /* ── FOOTER (fixed) ──────────────────────────── */
     .pg-footer {
         position:fixed; bottom:0.8cm; left:0; right:0;
-        border-top:3px solid #c00; padding-top:4px;
+        border-top:3px solid #1a3a8f; padding-top:4px;
         font-size:9px; color:#333; text-align:center; background:#fff;
     }
 
@@ -47,8 +47,23 @@
     .pmeta span { display:inline-block; width:68px; font-weight:bold; }
     .pimg  { max-width:180px; max-height:140px; display:block; margin:8px auto; }
     .fhd   { font-weight:bold; text-decoration:underline; margin-top:8px; margin-bottom:3px; font-size:12px; }
-    .flist { margin-left:14px; }
-    .flist li { margin-bottom:2px; font-size:11px; line-height:1.5; }
+    .flist { margin-left:0px; }
+    .flist ul {
+        list-style-type: disc !important;
+        margin: 5px 0 5px 20px !important;
+        padding-left: 0 !important;
+    }
+    .flist ol {
+        list-style-type: decimal !important;
+        margin: 5px 0 5px 20px !important;
+        padding-left: 0 !important;
+    }
+    .flist li {
+        margin-bottom: 3px !important;
+        font-size:11px;
+        line-height:1.5;
+        display: list-item !important;
+    }
     .inst-note { font-weight:bold; margin-top:6px; font-size:12px; }
     .spec-tbl  { width:100%; font-size:11px; }
     .spec-tbl td { border:none; padding:1px 4px 1px 0; }
@@ -164,13 +179,27 @@
                     @endif
 
                     @if($product->features)
-                        <div class="fhd">Features:</div>
-                        <ul class="flist">
-                            @foreach(array_filter(array_map('trim', explode("\n", strip_tags($product->features)))) as $feat)
-                                <li>{{ $feat }}</li>
-                            @endforeach
-                        </ul>
-                    @elseif($product->specifications && is_array($product->specifications) && count($product->specifications))
+                        <div class="fhd">Special Features:</div>
+                        <div class="flist">
+                            {!! $product->features !!}
+                        </div>
+                    @endif
+ 
+                    @if($product->short_description)
+                        <div class="fhd" style="margin-top: 8px;">Technical Description:</div>
+                        <div class="flist">
+                            {!! $product->short_description !!}
+                        </div>
+                    @endif
+ 
+                    @if($product->description)
+                        <div class="fhd" style="margin-top: 8px;">Product Description:</div>
+                        <div class="flist">
+                            {!! $product->description !!}
+                        </div>
+                    @endif
+ 
+                    @if(!$product->features && !$product->short_description && !$product->description && $product->specifications && is_array($product->specifications) && count($product->specifications))
                         <div class="fhd">Technical Specification</div>
                         <table class="spec-tbl">
                             @foreach($product->specifications as $k => $v)

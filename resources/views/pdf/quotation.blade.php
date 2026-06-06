@@ -126,6 +126,23 @@
         .feature-list li {
             margin-bottom: 2px;
         }
+        .flist { margin-left:0px; }
+        .flist ul {
+            list-style-type: disc !important;
+            margin: 5px 0 5px 20px !important;
+            padding-left: 0 !important;
+        }
+        .flist ol {
+            list-style-type: decimal !important;
+            margin: 5px 0 5px 20px !important;
+            padding-left: 0 !important;
+        }
+        .flist li {
+            margin-bottom: 3px !important;
+            font-size:11px;
+            line-height:1.5;
+            display: list-item !important;
+        }
     </style>
 </head>
 
@@ -191,9 +208,27 @@
 
                     @if($product->features)
                         <div style="margin-top: 10px;">
-                            <strong>Features:</strong>
-                            <div style="font-size: 11px;">
+                            <strong>Special Features:</strong>
+                            <div class="flist">
                                 {!! $product->features !!}
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($product->short_description)
+                        <div style="margin-top: 10px;">
+                            <strong>Technical Description:</strong>
+                            <div class="flist">
+                                {!! $product->short_description !!}
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($product->description)
+                        <div style="margin-top: 10px;">
+                            <strong>Product Description:</strong>
+                            <div class="flist">
+                                {!! $product->description !!}
                             </div>
                         </div>
                     @endif
