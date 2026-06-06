@@ -67,7 +67,6 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            border-bottom: 1px solid #000;
         }
 
         .table th {
@@ -196,6 +195,11 @@
                 <th>Remark</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr style="height: 0px; line-height: 0px;">
+                <td colspan="4" style="border-top: 1px solid #000; border-bottom: none; border-left: none; border-right: none; padding: 0; height: 0px; line-height: 0px; font-size: 0px;"></td>
+            </tr>
+        </tfoot>
         <tbody>
             <tr>
                 <td align="center">01</td>

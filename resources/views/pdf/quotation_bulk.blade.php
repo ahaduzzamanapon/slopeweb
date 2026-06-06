@@ -36,7 +36,7 @@
     .sig .sd { font-size:11px; line-height:1.7; }
 
     /* ── PRODUCT TABLE ───────────────────────────── */
-    .ptbl { width:100%; border-collapse:collapse; border-bottom:1px solid #555; }
+    .ptbl { width:100%; border-collapse:collapse; }
     .ptbl th { background:#1a3a8f; color:#fff; border:1px solid #333; padding:6px 8px; font-size:12px; text-align:center; }
     .ptbl td { border-left:1px solid #555; border-right:1px solid #555; border-top:none; border-bottom:none; padding:6px 8px; vertical-align:top; }
     .ptbl .sn { text-align:center; font-weight:bold; width:38px; }
@@ -160,6 +160,11 @@
                 <th class="rm">Remark</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr style="height: 0px; line-height: 0px;">
+                <td colspan="4" style="border-top: 1px solid #555; border-bottom: none; border-left: none; border-right: none; padding: 0; height: 0px; line-height: 0px; font-size: 0px;"></td>
+            </tr>
+        </tfoot>
         <tbody>
             <tr>
                 <td class="sn" style="font-size:14px;">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</td>
