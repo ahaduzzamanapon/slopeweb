@@ -134,21 +134,19 @@
         .flist { margin-left:0; }
         .flist ul {
             list-style-type: disc;
-            list-style-position: inside;
-            margin: 4px 0 4px 15px;
-            padding-left: 0;
+            padding-left: 18px;
+            margin: 4px 0;
         }
         .flist ol {
             list-style-type: decimal;
-            list-style-position: inside;
-            margin: 4px 0 4px 15px;
-            padding-left: 0;
+            padding-left: 18px;
+            margin: 4px 0;
         }
         .flist li {
+            display: list-item;
             margin-bottom: 3px;
             font-size:11px;
             line-height:1.6;
-            display: list-item;
         }
     </style>
 </head>
@@ -197,11 +195,6 @@
                 <th>Remark</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr style="height: 0px; line-height: 0px;">
-                <td colspan="4" style="border-top: 1px solid #000; border-bottom: none; border-left: none; border-right: none; padding: 0; height: 0px; line-height: 0px; font-size: 0px;"></td>
-            </tr>
-        </tfoot>
         <tbody>
             <tr>
                 <td align="center">01</td>
@@ -286,6 +279,7 @@
             @endif
         </tbody>
     </table>
+    <div style="border-top:1px solid #000; font-size:0; line-height:0; height:0;">&nbsp;</div>
 
     <div class="content-section">
         <p><strong>Terms and condition</strong></p>
