@@ -67,19 +67,25 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            border-bottom: 1px solid #000;
         }
 
-        .table th,
-        .table td {
+        .table th {
             border: 1px solid #000;
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
             padding: 8px;
             vertical-align: top;
         }
 
-        .table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            text-align: center;
+        .table td {
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+            border-top: none;
+            border-bottom: none;
+            padding: 8px;
+            vertical-align: top;
         }
 
         .signature-section {
