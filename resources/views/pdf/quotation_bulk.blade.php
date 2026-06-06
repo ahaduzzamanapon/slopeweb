@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Quotation - {{ $refId }}</title>
 <style>
-    @page { margin: 3cm 0cm 1.5cm 0cm; }
+    @page { margin: 110px 0px 50px 0px; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px; }
 
@@ -14,7 +14,8 @@
 
     /* ── FOOTER (fixed) ──────────────────────────── */
     .pg-footer {
-        position:fixed; bottom:0; left:0; right:0;
+        position:fixed; bottom:0px; left:0; right:0;
+        height:50px;
         border-top:3px solid #1a3a8f; padding-top:4px; padding-bottom:4px;
         font-size:9px; color:#333; text-align:center; background:#fff;
         z-index:1000;
@@ -37,9 +38,11 @@
     .sig .sd { font-size:11px; line-height:1.7; }
 
     /* ── PRODUCT TABLE ───────────────────────────── */
-    .ptbl { width:100%; border-collapse:collapse; border-bottom:2px solid #555; }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    .ptbl { width:100%; border-collapse:separate; border-spacing:0; border-bottom:2px solid #555; }
     .ptbl th { background:#1a3a8f; color:#fff; border:1px solid #333; padding:6px 8px; font-size:12px; text-align:center; }
-    .ptbl td { border-left:1px solid #555; border-right:1px solid #555; border-top:none; border-bottom:none; padding:6px 8px; vertical-align:top; }
+    .ptbl td { border-left:1px solid #555; border-right:1px solid #555; border-top:none; border-bottom:1px solid #555; padding:6px 8px; vertical-align:top; }
     .ptbl .sn { text-align:center; font-weight:bold; width:38px; }
     .ptbl .pr { text-align:right; width:110px; font-weight:bold; }
     .ptbl .rm { text-align:center; width:80px; }
