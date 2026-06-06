@@ -39,6 +39,8 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'features' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image|max:2048',
             'catalog' => 'nullable|file|mimes:pdf|max:10240', // Max 10MB PDF
             'stock_status' => 'required|string',
             'installation_charge' => 'nullable|numeric',
@@ -57,6 +59,14 @@ class ProductController extends Controller
         if ($request->hasFile('catalog')) {
             $data['catalog'] = $request->file('catalog')->store('catalogs', 'public');
         }
+
+        $galleryPaths = [];
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $galleryPaths[] = $file->store('products/gallery', 'public');
+            }
+        }
+        $data['gallery'] = $galleryPaths;
 
         Product::create($data);
 
@@ -84,6 +94,8 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'features' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'image|max:2048',
             'catalog' => 'nullable|file|mimes:pdf|max:10240',
             'stock_status' => 'required|string',
             'installation_charge' => 'nullable|numeric',
@@ -108,6 +120,24 @@ class ProductController extends Controller
             $data['catalog'] = $request->file('catalog')->store('catalogs', 'public');
         }
 
+        $currentGallery = $product->gallery ?? [];
+        if ($request->has('delete_gallery')) {
+            $toDelete = $request->input('delete_gallery');
+            foreach ($toDelete as $path) {
+                if (in_array($path, $currentGallery)) {
+                    Storage::disk('public')->delete($path);
+                    $currentGallery = array_values(array_diff($currentGallery, [$path]));
+                }
+            }
+        }
+
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $currentGallery[] = $file->store('products/gallery', 'public');
+            }
+        }
+        $data['gallery'] = $currentGallery;
+
         $product->update($data);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
@@ -120,6 +150,11 @@ class ProductController extends Controller
         }
         if ($product->catalog) {
             Storage::disk('public')->delete($product->catalog);
+        }
+        if (is_array($product->gallery)) {
+            foreach ($product->gallery as $galleryImg) {
+                Storage::disk('public')->delete($galleryImg);
+            }
         }
         $product->delete();
         return back()->with('success', 'Product deleted successfully.');

@@ -100,7 +100,7 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Product Image</label>
+                        <label class="form-label">Main Product Image</label>
                         @if($product->image)
                             <div class="mb-2">
                                 <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : Storage::url($product->image) }}"
@@ -120,6 +120,43 @@
                             </div>
                         @endif
                         <input type="file" name="catalog" class="form-control" accept=".pdf">
+                    </div>
+                </div>
+
+                <div class="card bg-light mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Product Gallery Images</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Upload New Gallery Images</label>
+                                <input type="file" name="gallery[]" class="form-control" multiple accept="image/*">
+                                <small class="text-muted d-block mt-1">Select one or more images to append to the product gallery.</small>
+                            </div>
+                        </div>
+
+                        @if($product->gallery && count($product->gallery) > 0)
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="form-label d-block">Current Gallery (Select to delete)</label>
+                                    <div class="row g-2">
+                                        @foreach($product->gallery as $galleryImg)
+                                            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                                                <div class="position-relative border rounded p-1 bg-white">
+                                                    <img src="{{ Storage::url($galleryImg) }}" class="img-fluid rounded" style="height: 100px; width: 100%; object-fit: cover;">
+                                                    <div class="form-check position-absolute top-0 start-0 m-2 bg-white rounded px-2 py-1 shadow-sm">
+                                                        <input type="checkbox" name="delete_gallery[]" value="{{ $galleryImg }}" class="form-check-input" id="del_gal_{{ $loop->index }}">
+                                                        <label class="form-check-label text-danger font-monospace small" for="del_gal_{{ $loop->index }}">Delete</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <p class="text-muted mb-0">No gallery images uploaded yet.</p>
+                        @endif
                     </div>
                 </div>
 

@@ -14,6 +14,7 @@ class Product extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'specifications' => 'array',
+        'gallery' => 'array',
         'is_featured' => 'boolean',
         'active' => 'boolean',
     ];

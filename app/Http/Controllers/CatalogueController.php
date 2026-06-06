@@ -20,6 +20,7 @@ class CatalogueController extends Controller
         CatalogueDownload::create([
             'name'  => $request->name,
             'phone' => $request->phone,
+            'product_id' => $request->product_id,
         ]);
 
         if ($request->filled('product_id')) {

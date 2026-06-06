@@ -19,6 +19,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('services', App\Http\Controllers\Admin\ServiceController::class)->names('admin.services');
         Route::resource('sliders', App\Http\Controllers\Admin\SliderController::class)->names('admin.sliders');
         Route::resource('contacts', App\Http\Controllers\Admin\ContactController::class)->only(['index', 'destroy'])->names('admin.contacts');
+        Route::resource('catalogue-downloads', App\Http\Controllers\Admin\CatalogueDownloadController::class)->only(['index', 'destroy'])->names('admin.catalogue-downloads');
         Route::resource('projects', App\Http\Controllers\Admin\ProjectController::class)->names('admin.projects');
 
         // Medical Modules

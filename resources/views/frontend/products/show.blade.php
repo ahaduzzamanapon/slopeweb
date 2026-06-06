@@ -37,14 +37,36 @@
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-8 border-b pb-4">{{ $product->title }}</h1>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-                <!-- Left Column: Image -->
-                <div class="bg-white border rounded-xl overflow-hidden shadow-sm flex items-center justify-center p-4">
-                    @if($product->image)
-                        <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : Storage::url($product->image) }}"
-                            alt="{{ $product->title }}" class="max-h-[500px] w-full object-contain">
-                    @else
-                        <div class="h-96 flex items-center justify-center text-slate-300">
-                            <span class="text-6xl">📷</span>
+                <!-- Left Column: Image & Gallery -->
+                <div class="flex flex-col gap-4">
+                    <div class="bg-white border rounded-xl overflow-hidden shadow-sm flex items-center justify-center p-4">
+                        @if($product->image)
+                            <img id="main-product-image" src="{{ Str::startsWith($product->image, 'http') ? $product->image : Storage::url($product->image) }}"
+                                alt="{{ $product->title }}" class="max-h-[500px] w-full object-contain transition-all duration-150">
+                        @else
+                            <div class="h-96 flex items-center justify-center text-slate-300">
+                                <span class="text-6xl">📷</span>
+                            </div>
+                        @endif
+                    </div>
+                    
+                    @if($product->gallery && count($product->gallery) > 0)
+                        <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
+                            <!-- Include main image as first thumbnail -->
+                            @if($product->image)
+                                <div class="aspect-square border rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-all p-1 bg-white border-primary border-2 thumbnail-item"
+                                     onclick="changeMainImage(this, '{{ Str::startsWith($product->image, 'http') ? $product->image : Storage::url($product->image) }}')">
+                                    <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : Storage::url($product->image) }}" 
+                                         class="w-full h-full object-cover rounded-md">
+                                </div>
+                            @endif
+                            @foreach($product->gallery as $galleryImg)
+                                <div class="aspect-square border rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-all p-1 bg-white border-slate-200 thumbnail-item"
+                                     onclick="changeMainImage(this, '{{ Storage::url($galleryImg) }}')">
+                                    <img src="{{ Storage::url($galleryImg) }}" 
+                                         class="w-full h-full object-cover rounded-md">
+                                </div>
+                            @endforeach
                         </div>
                     @endif
                 </div>
@@ -184,4 +206,25 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function changeMainImage(element, src) {
+            const mainImage = document.getElementById('main-product-image');
+            if (mainImage) {
+                mainImage.style.opacity = '0';
+                setTimeout(() => {
+                    mainImage.src = src;
+                    mainImage.style.opacity = '1';
+                }, 100);
+            }
+            
+            document.querySelectorAll('.thumbnail-item').forEach(item => {
+                item.classList.remove('border-primary', 'border-2');
+                item.classList.add('border-slate-200');
+            });
+            
+            element.classList.remove('border-slate-200');
+            element.classList.add('border-primary', 'border-2');
+        }
+    </script>
 @endsection

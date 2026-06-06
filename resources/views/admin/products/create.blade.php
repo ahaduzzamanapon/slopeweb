@@ -96,11 +96,16 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Product Image</label>
+                    <div class="col-md-4">
+                        <label class="form-label">Main Product Image</label>
                         <input type="file" name="image" class="form-control">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label class="form-label">Product Gallery Images</label>
+                        <input type="file" name="gallery[]" class="form-control" multiple accept="image/*">
+                        <small class="text-muted d-block">You can select multiple images.</small>
+                    </div>
+                    <div class="col-md-4">
                         <label class="form-label">Product Catalog (PDF)</label>
                         <input type="file" name="catalog" class="form-control" accept=".pdf">
                     </div>

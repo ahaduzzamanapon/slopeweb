@@ -88,6 +88,12 @@
                     <div class="d-flex align-items-center"><i class="bi bi-envelope me-2"></i> Messages</div>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="{{ route('admin.catalogue-downloads.index') }}" class="nav-link {{ request()->routeIs('admin.catalogue-downloads.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center"><i class="bi bi-download me-2"></i> Catalog Downloads</div>
+                </a>
+            </li>
         </ul>
 
         <div class="px-3 mt-3 mb-2 text-uppercase text-xs fw-bold opacity-50" style="font-size: 0.75rem; letter-spacing: 0.05em;">Administration</div>
