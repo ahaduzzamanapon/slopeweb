@@ -27,12 +27,12 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'client_name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'url' => 'nullable|url',
+            'url' => 'nullable|string|max:2000',
             'image' => 'nullable|image|max:2048',
             'completion_date' => 'nullable|date',
             'technologies' => 'nullable|string', // Comma separated
-            'active' => 'boolean',
-            'order' => 'integer',
+            'active' => 'nullable|boolean',
+            'order' => 'nullable|integer',
         ]);
 
         $data['slug'] = Str::slug($data['title']);
@@ -62,12 +62,12 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'client_name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'url' => 'nullable|url',
+            'url' => 'nullable|string|max:2000',
             'image' => 'nullable|image|max:2048',
             'completion_date' => 'nullable|date',
             'technologies' => 'nullable|string',
-            'active' => 'boolean',
-            'order' => 'integer',
+            'active' => 'nullable|boolean',
+            'order' => 'nullable|integer',
         ]);
 
         $data['slug'] = Str::slug($data['title']);

@@ -28,8 +28,8 @@ class ServiceController extends Controller
             'description' => 'nullable|string',
             'icon' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
-            'active' => 'boolean',
-            'order' => 'integer',
+            'active' => 'nullable|boolean',
+            'order' => 'nullable|integer',
         ]);
 
         $data['slug'] = Str::slug($data['title']);
@@ -56,8 +56,8 @@ class ServiceController extends Controller
             'description' => 'nullable|string',
             'icon' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
-            'active' => 'boolean',
-            'order' => 'integer',
+            'active' => 'nullable|boolean',
+            'order' => 'nullable|integer',
         ]);
 
         $data['slug'] = Str::slug($data['title']);

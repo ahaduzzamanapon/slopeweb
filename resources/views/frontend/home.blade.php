@@ -148,36 +148,36 @@
                     transformed their facilities with Slope Medisolve.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($testimonials ?? [] as $index => $testimonial)
-                    <div class="glass p-12 rounded-[3.5rem] relative shadow-2xl border border-white/50 fade-up delay-{{ ($index % 3 + 1) * 100 }} group hover:shadow-primary/5 transition-all duration-700">
-                        <div class="absolute top-10 right-12 text-7xl text-primary/5 font-serif group-hover:text-primary/10 transition-colors">"</div>
-                        <div class="flex items-center gap-6 mb-10">
-                            <div class="w-20 h-20 rounded-2xl overflow-hidden shadow-lg transform {{ $index % 2 == 0 ? '-rotate-3' : 'rotate-3' }} group-hover:rotate-0 transition-transform">
+                    <div class="glass p-8 rounded-[2.5rem] relative shadow-2xl border border-white/50 fade-up delay-{{ ($index % 3 + 1) * 100 }} group hover:shadow-primary/5 transition-all duration-700">
+                        <div class="absolute top-8 right-8 text-6xl text-primary/5 font-serif group-hover:text-primary/10 transition-colors">"</div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-xl overflow-hidden shadow-lg transform {{ $index % 2 == 0 ? '-rotate-3' : 'rotate-3' }} group-hover:rotate-0 transition-transform flex-shrink-0">
                                 @if($testimonial->avatar)
                                     <img src="{{ str_starts_with($testimonial->avatar, 'http') ? $testimonial->avatar : asset('storage/' . $testimonial->avatar) }}" alt="{{ $testimonial->name }}" class="w-full h-full object-cover">
                                 @else
-                                    <div class="w-full h-full bg-primary/10 flex items-center justify-center text-primary text-3xl font-bold">
+                                    <div class="w-full h-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
                                         {{ strtoupper(substr($testimonial->name, 0, 1)) }}
                                     </div>
                                 @endif
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-900 text-xl">{{ $testimonial->name }}</h4>
-                                <p class="text-primary font-medium text-sm">{{ $testimonial->title }}</p>
-                                <div class="mt-2 flex text-yellow-500 text-sm tracking-widest gap-0.5">
+                                <h4 class="font-bold text-slate-900 text-lg leading-snug">{{ $testimonial->name }}</h4>
+                                <p class="text-primary font-medium text-xs mt-0.5">{{ $testimonial->title }}</p>
+                                <div class="mt-1 flex text-yellow-500 text-xs tracking-widest gap-0.5">
                                     @for($i = 1; $i <= 5; $i++)
                                         <span class="{{ $i <= $testimonial->rating ? 'opacity-100' : 'opacity-30 text-slate-300' }}">★</span>
                                     @endfor
                                 </div>
                             </div>
                         </div>
-                        <p class="text-slate-600 text-xl italic font-light leading-relaxed">
+                        <p class="text-slate-600 text-base italic font-light leading-relaxed">
                             "{{ $testimonial->quote }}"
                         </p>
                     </div>
                 @empty
-                    <div class="col-span-1 border border-dashed border-slate-300 rounded-3xl p-10 text-center text-slate-500 font-light">
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 border border-dashed border-slate-300 rounded-3xl p-10 text-center text-slate-500 font-light">
                         No success stories found.
                     </div>
                 @endforelse

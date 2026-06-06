@@ -99,7 +99,7 @@
                         Product Description
                     </h3>
                     <div class="prose prose-lg text-slate-600 max-w-none bg-white p-6 border rounded-xl shadow-sm">
-                        {!! nl2br(e($product->description)) !!}
+                        {!! $product->description !!}
                     </div>
                 </div>
 
