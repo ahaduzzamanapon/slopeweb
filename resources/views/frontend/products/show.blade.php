@@ -93,21 +93,37 @@
 
             <!-- Description & Features -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <div class="lg:col-span-2">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                        <span class="w-2 h-8 bg-primary rounded-full"></span>
-                        Product Description
-                    </h3>
-                    <div class="prose prose-lg text-slate-600 max-w-none bg-white p-6 border rounded-xl shadow-sm">
-                        {!! $product->description !!}
+                <div class="lg:col-span-2 space-y-12">
+                    <!-- Product Description -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            <span class="w-2 h-8 bg-primary rounded-full"></span>
+                            Product Description
+                        </h3>
+                        <div class="prose prose-lg text-slate-600 max-w-none bg-white p-6 border rounded-xl shadow-sm">
+                            {!! $product->description !!}
+                        </div>
                     </div>
+
+                    <!-- Technical Description -->
+                    @if($product->short_description)
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+                            Technical Description
+                        </h3>
+                        <div class="prose prose-lg text-slate-600 max-w-none bg-white p-6 border rounded-xl shadow-sm">
+                            {!! $product->short_description !!}
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 <div class="lg:col-span-1">
                     @if($product->features)
                         <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                             <span class="w-2 h-8 bg-teal-500 rounded-full"></span>
-                            Features
+                            Special Features
                         </h3>
                         <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 prose prose-indigo">
                             {!! $product->features !!}
