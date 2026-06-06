@@ -264,7 +264,7 @@
             @endif
         </tbody>
     </table>
-    <div style="border-top:1px solid #555; font-size:0; line-height:0; height:0;">&nbsp;</div>
+    <div style="background:#555; height:1px; width:100%; font-size:0; line-height:0;"></div>
 </div>
 @endforeach
 
