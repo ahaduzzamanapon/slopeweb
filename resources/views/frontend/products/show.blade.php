@@ -1,6 +1,25 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+<style>
+    .prose ul, .prose-indigo ul {
+        list-style-type: disc !important;
+        padding-left: 1.5rem !important;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .prose ol, .prose-indigo ol {
+        list-style-type: decimal !important;
+        padding-left: 1.5rem !important;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .prose li, .prose-indigo li {
+        margin-bottom: 0.25rem !important;
+        list-style: inherit !important;
+        display: list-item !important;
+    }
+</style>
     <!-- Breadcrumbs -->
     <div class="bg-gray-50 py-4 border-b border-gray-100">
         <div class="container mx-auto px-6 text-sm text-gray-500">
