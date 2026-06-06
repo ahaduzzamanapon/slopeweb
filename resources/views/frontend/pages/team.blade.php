@@ -31,6 +31,8 @@
             @php
                 $md = \App\Models\TeamMember::where('active', true)->where('designation', 'Managing Director')->first();
                 $team = \App\Models\TeamMember::where('active', true)->where('id', '!=', $md?->id ?? 0)->orderBy('order')->get();
+                $topTeam = $team->take(2);
+                $otherTeam = $team->skip(2);
             @endphp
             
             @if($md)
@@ -57,8 +59,10 @@
             </div>
             @endif
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto fade-up delay-200">
-                @foreach($team as $index => $member)
+            <!-- Top Team (2 Members) -->
+            @if($topTeam->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16 fade-up delay-100">
+                @foreach($topTeam as $index => $member)
                     @php
                         $colors = [
                             ['border' => 'border-primary/10', 'bg' => 'bg-primary/5', 'text' => 'text-primary'],
@@ -87,6 +91,41 @@
                     </div>
                 @endforeach
             </div>
+            @endif
+
+            <!-- Rest of the Team (3 Columns Grid) -->
+            @if($otherTeam->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto fade-up delay-200">
+                @foreach($otherTeam as $index => $member)
+                    @php
+                        $colors = [
+                            ['border' => 'border-primary/10', 'bg' => 'bg-primary/5', 'text' => 'text-primary'],
+                            ['border' => 'border-accent/20', 'bg' => 'bg-accent/10', 'text' => 'text-yellow-700']
+                        ];
+                        $color = $colors[$index % 2];
+                    @endphp
+                    <div
+                        class="bg-white p-6 rounded-[2rem] border border-slate-50 soft-shadow hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex items-center gap-6">
+                        <div class="relative w-24 h-24 flex-shrink-0">
+                            <div
+                                class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
+                            </div>
+                            <img src="{{ Str::startsWith($member->image, 'http') ? $member->image : Storage::url($member->image) }}"
+                                class="w-full h-full rounded-full border-4 border-white shadow-sm relative z-10 group-hover:scale-105 transition-transform object-cover">
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-900 font-display mb-1 group-hover:text-primary transition-colors">{{ $member->name }}</h4>
+                            @if($member->type == 'management')
+                                <span
+                                    class="inline-block {{ $color['text'] }} font-bold {{ $color['bg'] }} px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mt-2 border {{ $color['border'] }}">{{ $member->designation }}</span>
+                            @else
+                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wide mt-1">{{ $member->designation }}</p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </section>
 @endsection

@@ -131,6 +131,7 @@
                             <a href="{{ route('about.md_message') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">MD</a>
                             <a href="{{ route('about.team') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Team</a>
                             <a href="{{ route('about.clients') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Our Client</a>
+                            <a href="{{ route('branches') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Our Branches</a>
                         </div>
                     </div>
                 </div>

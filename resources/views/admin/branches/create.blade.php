@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-3 d-flex align-items-center pt-4">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="active" id="active" checked>
+                            <input class="form-check-input" type="checkbox" name="active" id="active" value="1" checked>
                             <label class="form-check-label fw-semibold" for="active">Active</label>
                         </div>
                     </div>
