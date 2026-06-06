@@ -172,45 +172,6 @@
                         @if($product->warranty)<div><span>Warranty</span> :&nbsp;{{ $product->warranty }}</div>@endif
                         @if($product->assembly)<div><span>Assembly</span> :&nbsp;{{ $product->assembly }}</div>@endif
                     </div>
-
-                    @if($product->image)
-                        @php $imgSrc = str_starts_with($product->image,'http') ? $product->image : public_path('storage/'.$product->image); @endphp
-                        <img src="{{ $imgSrc }}" class="pimg" alt="{{ $product->title }}">
-                    @endif
-
-                    @if($product->features)
-                        <div class="fhd">Special Features:</div>
-                        <div class="flist">
-                            {!! $product->features !!}
-                        </div>
-                    @endif
- 
-                    @if($product->short_description)
-                        <div class="fhd" style="margin-top: 8px;">Technical Description:</div>
-                        <div class="flist">
-                            {!! $product->short_description !!}
-                        </div>
-                    @endif
- 
-                    @if($product->description)
-                        <div class="fhd" style="margin-top: 8px;">Product Description:</div>
-                        <div class="flist">
-                            {!! $product->description !!}
-                        </div>
-                    @endif
- 
-                    @if(!$product->features && !$product->short_description && !$product->description && $product->specifications && is_array($product->specifications) && count($product->specifications))
-                        <div class="fhd">Technical Specification</div>
-                        <table class="spec-tbl">
-                            @foreach($product->specifications as $k => $v)
-                                <tr><td>{{ $k }}</td><td>: {{ $v }}</td></tr>
-                            @endforeach
-                        </table>
-                    @endif
-
-                    @if(!empty($product->installation_charge) && $product->installation_charge > 0)
-                        <p class="inst-note">Installation Charge &nbsp; {{ number_format($product->installation_charge, 0) }} TK Need To Pay By The Buyer</p>
-                    @endif
                 </td>
                 <td class="pr">
                     @php $price = $product->custom_price ?? $product->price; @endphp
@@ -220,6 +181,87 @@
                     {{ ($product->stock_status === 'in_stock' || !$product->stock_status) ? 'Ready stock' : ucfirst(str_replace('_',' ',$product->stock_status)) }}
                 </td>
             </tr>
+
+            @if($product->image)
+            <tr>
+                <td></td>
+                <td>
+                    @php $imgSrc = str_starts_with($product->image,'http') ? $product->image : public_path('storage/'.$product->image); @endphp
+                    <img src="{{ $imgSrc }}" class="pimg" alt="{{ $product->title }}">
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+
+            @if($product->features)
+            <tr>
+                <td></td>
+                <td>
+                    <div class="fhd">Special Features:</div>
+                    <div class="flist">
+                        {!! $product->features !!}
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+ 
+            @if($product->short_description)
+            <tr>
+                <td></td>
+                <td>
+                    <div class="fhd">Technical Description:</div>
+                    <div class="flist">
+                        {!! $product->short_description !!}
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+ 
+            @if($product->description)
+            <tr>
+                <td></td>
+                <td>
+                    <div class="fhd">Product Description:</div>
+                    <div class="flist">
+                        {!! $product->description !!}
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+ 
+            @if(!$product->features && !$product->short_description && !$product->description && $product->specifications && is_array($product->specifications) && count($product->specifications))
+            <tr>
+                <td></td>
+                <td>
+                    <div class="fhd">Technical Specification</div>
+                    <table class="spec-tbl">
+                        @foreach($product->specifications as $k => $v)
+                            <tr><td>{{ $k }}</td><td>: {{ $v }}</td></tr>
+                        @endforeach
+                    </table>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+
+            @if(!empty($product->installation_charge) && $product->installation_charge > 0)
+            <tr>
+                <td></td>
+                <td>
+                    <p class="inst-note">Installation Charge &nbsp; {{ number_format($product->installation_charge, 0) }} TK Need To Pay By The Buyer</p>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
         </tbody>
     </table>
 </div>

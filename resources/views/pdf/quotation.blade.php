@@ -205,40 +205,6 @@
                         @if($product->warranty)
                         <li>Warranty :{{ $product->warranty }}</li> @endif
                     </ul>
-
-                    @if($product->features)
-                        <div style="margin-top: 10px;">
-                            <strong>Special Features:</strong>
-                            <div class="flist">
-                                {!! $product->features !!}
-                            </div>
-                        </div>
-                    @endif
-
-                    @if($product->short_description)
-                        <div style="margin-top: 10px;">
-                            <strong>Technical Description:</strong>
-                            <div class="flist">
-                                {!! $product->short_description !!}
-                            </div>
-                        </div>
-                    @endif
-
-                    @if($product->description)
-                        <div style="margin-top: 10px;">
-                            <strong>Product Description:</strong>
-                            <div class="flist">
-                                {!! $product->description !!}
-                            </div>
-                        </div>
-                    @endif
-
-                    @if($product->installation_charge > 0)
-                        <div style="margin-top: 10px; font-weight: bold;">
-                            Installation Charge {{ number_format($product->installation_charge, 0) }} TK Need To Pay By The
-                            Buyer
-                        </div>
-                    @endif
                 </td>
                 <td class="price-col">
                     @if($product->price > 0)
@@ -251,6 +217,61 @@
                     {{ $product->stock_status == 'in_stock' ? 'Ready stock' : 'On order' }}
                 </td>
             </tr>
+
+            @if($product->features)
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Special Features:</strong>
+                    <div class="flist">
+                        {!! $product->features !!}
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+
+            @if($product->short_description)
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Technical Description:</strong>
+                    <div class="flist">
+                        {!! $product->short_description !!}
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+
+            @if($product->description)
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Product Description:</strong>
+                    <div class="flist">
+                        {!! $product->description !!}
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+
+            @if($product->installation_charge > 0)
+            <tr>
+                <td></td>
+                <td>
+                    <div style="font-weight: bold;">
+                        Installation Charge {{ number_format($product->installation_charge, 0) }} TK Need To Pay By The Buyer
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
         </tbody>
     </table>
 
