@@ -131,22 +131,24 @@
         .feature-list li {
             margin-bottom: 2px;
         }
-        .flist { margin-left:0px; }
+        .flist { margin-left:0; }
         .flist ul {
-            list-style-type: disc !important;
-            margin: 5px 0 5px 20px !important;
-            padding-left: 0 !important;
+            list-style-type: disc;
+            list-style-position: inside;
+            margin: 4px 0 4px 15px;
+            padding-left: 0;
         }
         .flist ol {
-            list-style-type: decimal !important;
-            margin: 5px 0 5px 20px !important;
-            padding-left: 0 !important;
+            list-style-type: decimal;
+            list-style-position: inside;
+            margin: 4px 0 4px 15px;
+            padding-left: 0;
         }
         .flist li {
-            margin-bottom: 3px !important;
+            margin-bottom: 3px;
             font-size:11px;
-            line-height:1.5;
-            display: list-item !important;
+            line-height:1.6;
+            display: list-item;
         }
     </style>
 </head>

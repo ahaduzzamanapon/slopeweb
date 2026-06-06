@@ -47,22 +47,24 @@
     .pmeta span { display:inline-block; width:68px; font-weight:bold; }
     .pimg  { max-width:180px; max-height:140px; display:block; margin:8px auto; }
     .fhd   { font-weight:bold; text-decoration:underline; margin-top:8px; margin-bottom:3px; font-size:12px; }
-    .flist { margin-left:0px; }
+    .flist { margin-left:0; }
     .flist ul {
-        list-style-type: disc !important;
-        margin: 5px 0 5px 20px !important;
-        padding-left: 0 !important;
+        list-style-type: disc;
+        list-style-position: inside;
+        margin: 4px 0 4px 15px;
+        padding-left: 0;
     }
     .flist ol {
-        list-style-type: decimal !important;
-        margin: 5px 0 5px 20px !important;
-        padding-left: 0 !important;
+        list-style-type: decimal;
+        list-style-position: inside;
+        margin: 4px 0 4px 15px;
+        padding-left: 0;
     }
     .flist li {
-        margin-bottom: 3px !important;
+        margin-bottom: 3px;
         font-size:11px;
-        line-height:1.5;
-        display: list-item !important;
+        line-height:1.6;
+        display: list-item;
     }
     .inst-note { font-weight:bold; margin-top:6px; font-size:12px; }
     .spec-tbl  { width:100%; font-size:11px; }
@@ -161,8 +163,8 @@
             </tr>
         </thead>
         <tfoot>
-            <tr style="height: 0px; line-height: 0px;">
-                <td colspan="4" style="border-top: 1px solid #555; border-bottom: none; border-left: none; border-right: none; padding: 0; height: 0px; line-height: 0px; font-size: 0px;"></td>
+            <tr style="height: 1px; line-height: 1px;">
+                <td colspan="4" style="border-top: 1px solid #555; border-bottom: none; border-left: none; border-right: none; padding: 0; height: 1px; line-height: 1px; font-size: 1px;">&nbsp;</td>
             </tr>
         </tfoot>
         <tbody>
