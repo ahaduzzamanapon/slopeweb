@@ -160,11 +160,6 @@
                 <th class="rm">Remark</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr style="height:2px;">
-                <td colspan="4" style="background:#555; padding:0; border:none; height:2px; font-size:0; line-height:0;"></td>
-            </tr>
-        </tfoot>
         <tbody>
             <tr>
                 <td class="sn" style="font-size:14px;">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</td>
