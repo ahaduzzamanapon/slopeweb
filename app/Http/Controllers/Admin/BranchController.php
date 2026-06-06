@@ -28,8 +28,8 @@ class BranchController extends Controller
             'phone'   => 'nullable|string|max:50',
             'email'   => 'nullable|email|max:255',
             'logo'    => 'nullable|image|max:2048',
-            'order'   => 'integer',
-            'active'  => 'boolean',
+            'order'   => 'nullable|integer',
+            'active'  => 'nullable|boolean',
         ]);
 
         $data['active'] = $request->has('active');
@@ -55,8 +55,8 @@ class BranchController extends Controller
             'phone'   => 'nullable|string|max:50',
             'email'   => 'nullable|email|max:255',
             'logo'    => 'nullable|image|max:2048',
-            'order'   => 'integer',
-            'active'  => 'boolean',
+            'order'   => 'nullable|integer',
+            'active'  => 'nullable|boolean',
         ]);
 
         $data['active'] = $request->has('active');

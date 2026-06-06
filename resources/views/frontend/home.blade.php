@@ -141,9 +141,9 @@
         <div class="absolute bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-[80px]"></div>
 
         <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-xl mb-16 fade-up">
+            <div class="max-w-3xl mx-auto text-center mb-16 fade-up">
                 <h2 class="text-4xl md:text-5xl font-display font-extrabold text-slate-900 mb-6">Success Stories</h2>
-                <div class="w-16 h-1.5 bg-primary rounded-full mb-6"></div>
+                <div class="w-16 h-1.5 bg-primary rounded-full mb-6 mx-auto"></div>
                 <p class="text-slate-500 text-xl font-light leading-relaxed">Hear from the healthcare leaders who have
                     transformed their facilities with Slope Medisolve.</p>
             </div>

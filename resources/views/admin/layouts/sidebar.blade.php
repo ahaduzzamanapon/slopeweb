@@ -25,7 +25,7 @@
             
             <li class="nav-item">
                 <a href="{{ route('admin.products.index') }}" class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }} d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center"><i class="bi bi-box-seam me-2"></i> Products</div>
+                    <div class="d-flex align-items-center"><i class="bi bi-box-seam me-2"></i> Products & Generate Quotation</div>
                 </a>
             </li>
 

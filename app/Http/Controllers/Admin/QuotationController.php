@@ -94,6 +94,10 @@ class QuotationController extends Controller
 
         \Illuminate\Support\Facades\Storage::disk('public')->put('quotations/' . $fileName, $pdf->output());
 
+        $totalAmount = $products->sum(function($product) {
+            return ($product->custom_price ?? 0) * ($product->custom_quantity ?? 1);
+        });
+
         Quotation::create([
             'title'          => $title,
             'file_path'      => 'quotations/' . $fileName,
@@ -103,6 +107,7 @@ class QuotationController extends Controller
             'client_phone'   => $request->client_phone,
             'prepared_by'    => $preparedBy,
             'status'         => 'pending',
+            'total_amount'   => $totalAmount,
         ]);
 
         return redirect()->route('admin.quotations.index')->with('success', 'Quotation ' . $refId . ' generated successfully.');

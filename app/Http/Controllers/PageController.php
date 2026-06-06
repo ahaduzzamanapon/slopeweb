@@ -34,8 +34,8 @@ class PageController extends Controller
 
     public function services()
     {
-        // Fetch services if you have a service model, or just return static view
-        return view('frontend.pages.services');
+        $services = \App\Models\Service::where('active', true)->orderBy('order')->get();
+        return view('frontend.pages.services', compact('services'));
     }
 
     public function contact()

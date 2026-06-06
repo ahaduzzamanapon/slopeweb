@@ -15,5 +15,6 @@ class Quotation extends Model
         'client_phone',
         'prepared_by',
         'status',
+        'total_amount',
     ];
 }

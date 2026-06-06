@@ -78,19 +78,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Features</label>
+                    <label class="form-label fw-semibold">Special Features</label>
                     <div id="quill_features" style="height: 180px;"></div>
                     <textarea name="features" id="features_input" class="d-none"></textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Short Description</label>
+                    <label class="form-label fw-semibold">Technical Description</label>
                     <div id="quill_short" style="height: 120px;"></div>
                     <textarea name="short_description" id="short_input" class="d-none"></textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Full Description</label>
+                    <label class="form-label fw-semibold">Product Description</label>
                     <div id="quill_desc" style="height: 220px;"></div>
                     <textarea name="description" id="desc_input" class="d-none"></textarea>
                 </div>

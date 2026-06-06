@@ -31,6 +31,7 @@
                         <th>Client</th>
                         <th>Prepared By</th>
                         <th>Status</th>
+                        <th>Total Amount</th>
                         <th>Date</th>
                         <th width="200">Actions</th>
                     </tr>
@@ -54,6 +55,7 @@
                                     </select>
                                 </form>
                             </td>
+                            <td class="fw-semibold">{{ number_format($quotation->total_amount, 2) }} ৳</td>
                             <td>{{ $quotation->created_at->format('M d, Y h:i A') }}</td>
                             <td>
                                 <a href="{{ asset('storage/' . $quotation->file_path) }}" target="_blank" class="btn btn-sm btn-info text-white">
@@ -69,7 +71,7 @@
                     @endforeach
                     @if($quotations->isEmpty())
                         <tr>
-                            <td colspan="8" class="text-center">No quotations generated yet.</td>
+                            <td colspan="9" class="text-center">No quotations generated yet.</td>
                         </tr>
                     @endif
                 </tbody>

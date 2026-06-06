@@ -72,6 +72,10 @@
 
     <!-- Delete Forms -->
     @foreach($products as $product)
+        <form id="delete-form-{{ $product->id }}" action="{{ route('admin.products.destroy', $product) }}" method="POST" class="d-none">
+            @csrf
+            @method('DELETE')
+        </form>
     @endforeach
 </div>
 
