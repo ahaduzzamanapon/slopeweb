@@ -200,15 +200,15 @@
 
             <!-- Categories Filter -->
             <div class="flex flex-wrap justify-center gap-3 mb-16">
-                <button
-                    class="px-8 py-3 rounded-full bg-primary text-white font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 active:scale-95">
+                <a href="{{ route('products.index') }}"
+                    class="px-8 py-3 rounded-full bg-primary text-white font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 active:scale-95 inline-block text-center">
                     All Products
-                </button>
+                </a>
                 @foreach($globalCategories->where('parent_id', null) as $category)
-                    <button
-                        class="px-8 py-3 rounded-full bg-slate-50 text-slate-600 hover:bg-white hover:text-primary hover:shadow-md transition-all font-bold border border-slate-200">
+                    <a href="{{ route('products.index', ['category' => $category->slug ?? $category->id]) }}"
+                        class="px-8 py-3 rounded-full bg-slate-50 text-slate-600 hover:bg-white hover:text-primary hover:shadow-md transition-all font-bold border border-slate-200 inline-block text-center">
                         {{ $category->name }}
-                    </button>
+                    </a>
                 @endforeach
             </div>
 
