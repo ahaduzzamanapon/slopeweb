@@ -93,11 +93,7 @@
                 <span>📞 {{ $globalSettings->phone ?? '+880 1913 662 687' }}</span>
                 <span>✉️ {{ $globalSettings->email ?? 'contact@slope.com' }}</span>
             </div>
-            <div class="flex items-center gap-4">
-                <a href="#" class="hover:text-accent transition-colors">Sign In</a>
-                <span>|</span>
-                <a href="#" class="hover:text-accent transition-colors">Register</a>
-            </div>
+            
         </div>
     </div>
 
@@ -128,8 +124,8 @@
                     </button>
                     <div class="dropdown-menu pt-4 w-48 left-0">
                         <div class="glass rounded-2xl shadow-xl border border-slate-100 overflow-hidden py-2 soft-shadow">
-                            <a href="{{ route('about.md_message') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">MD</a>
-                            <a href="{{ route('about.team') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Team</a>
+                            <a href="{{ route('about.md_message') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Managing Director</a>
+                            <a href="{{ route('about.team') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Our Team</a>
                             <a href="{{ route('about.clients') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Our Client</a>
                             <a href="{{ route('branches') }}" class="block px-6 py-3 text-sm hover:bg-primary/5 hover:text-primary transition-all">Our Branches</a>
                         </div>
