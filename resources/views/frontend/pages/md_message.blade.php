@@ -27,6 +27,9 @@
         <div class="container mx-auto px-6 relative z-10">
             <div class="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center max-w-7xl mx-auto">
                 <!-- Author Image -->
+                @php
+                    $md = \App\Models\TeamMember::where('active', true)->where('designation', 'Managing Director')->first();
+                @endphp
                 <div class="w-full lg:w-5/12 fade-up delay-100">
                     <div class="relative group mx-auto max-w-md">
                         <div
@@ -34,9 +37,15 @@
                         </div>
                         <div
                             class="bg-slate-200 aspect-[4/5] rounded-[3rem] relative z-10 overflow-hidden shadow-2xl border-8 border-white group-hover:-translate-y-2 transition-transform duration-700">
-                            <img src="https://ui-avatars.com/api/?name=Saidul+Islam&background=random&size=512&color=fff&font-size=0.33"
-                                alt="Managing Director"
-                                class="w-full h-full object-cover filter contrast-[0.95] group-hover:scale-105 transition-transform duration-1000">
+                            @if($md && $md->image)
+                                <img src="{{ Str::startsWith($md->image, 'http') ? $md->image : Storage::url($md->image) }}"
+                                    alt="{{ $globalSettings->md_name ?? $md->name }}"
+                                    class="w-full h-full object-cover filter contrast-[0.95] group-hover:scale-105 transition-transform duration-1000">
+                            @else
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($globalSettings->md_name ?? 'Saidul Islam') }}&background=random&size=512&color=fff&font-size=0.33"
+                                    alt="Managing Director"
+                                    class="w-full h-full object-cover filter contrast-[0.95] group-hover:scale-105 transition-transform duration-1000">
+                            @endif
                         </div>
                     </div>
                 </div>

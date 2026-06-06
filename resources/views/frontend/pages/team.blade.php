@@ -30,8 +30,7 @@
             <!-- Managing Director (Top) -->
             @php
                 $md = \App\Models\TeamMember::where('active', true)->where('designation', 'Managing Director')->first();
-                $management = \App\Models\TeamMember::where('active', true)->where('type', 'management')->where('id', '!=', $md?->id ?? 0)->orderBy('order')->get();
-                $engineers = \App\Models\TeamMember::where('active', true)->where('type', 'engineer')->orderBy('order')->get();
+                $team = \App\Models\TeamMember::where('active', true)->where('id', '!=', $md?->id ?? 0)->orderBy('order')->get();
             @endphp
             
             @if($md)
@@ -58,51 +57,35 @@
             </div>
             @endif
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 max-w-7xl mx-auto">
-                <!-- Left Side: Management (Vertical Stack) -->
-                <div class="lg:col-span-4 space-y-10 flex flex-col items-center lg:items-end fade-up delay-100">
-                    @foreach($management as $index => $member)
-                        @php
-                            $colors = [['border' => 'border-primary/10', 'bg' => 'bg-primary/5', 'text' => 'text-primary'], ['border' => 'border-accent/20', 'bg' => 'bg-accent/10', 'text' => 'text-yellow-700']];
-                            $color = $colors[$index % 2];
-                        @endphp
-                        <div
-                            class="flex items-center gap-6 text-right flex-row-reverse lg:flex-row bg-white p-6 rounded-[2rem] w-full lg:w-auto soft-shadow border border-slate-50 hover:border-primary/20 transition-all group">
-                            <div>
-                                <h4 class="text-xl font-bold text-slate-900 font-display">{{ $member->name }}</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto fade-up delay-200">
+                @foreach($team as $index => $member)
+                    @php
+                        $colors = [
+                            ['border' => 'border-primary/10', 'bg' => 'bg-primary/5', 'text' => 'text-primary'],
+                            ['border' => 'border-accent/20', 'bg' => 'bg-accent/10', 'text' => 'text-yellow-700']
+                        ];
+                        $color = $colors[$index % 2];
+                    @endphp
+                    <div
+                        class="bg-white p-6 rounded-[2rem] border border-slate-50 soft-shadow hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex items-center gap-6">
+                        <div class="relative w-24 h-24 flex-shrink-0">
+                            <div
+                                class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
+                            </div>
+                            <img src="{{ Str::startsWith($member->image, 'http') ? $member->image : Storage::url($member->image) }}"
+                                class="w-full h-full rounded-full border-4 border-white shadow-sm relative z-10 group-hover:scale-105 transition-transform object-cover">
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-900 font-display mb-1 group-hover:text-primary transition-colors">{{ $member->name }}</h4>
+                            @if($member->type == 'management')
                                 <span
                                     class="inline-block {{ $color['text'] }} font-bold {{ $color['bg'] }} px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mt-2 border {{ $color['border'] }}">{{ $member->designation }}</span>
-                            </div>
-                            <div
-                                class="w-24 h-24 rounded-full overflow-hidden border-4 border-slate-50 shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
-                                <img src="{{ Str::startsWith($member->image, 'http') ? $member->image : Storage::url($member->image) }}"
-                                    class="w-full h-full object-cover">
-                            </div>
+                            @else
+                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wide mt-1">{{ $member->designation }}</p>
+                            @endif
                         </div>
-                    @endforeach
-                </div>
-
-                <!-- Right Side: Engineers (Grid) -->
-                <div class="lg:col-span-8 fade-up delay-200">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        @foreach($engineers as $member)
-                        <div
-                            class="bg-white p-8 rounded-[2rem] border border-slate-50 soft-shadow hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex items-center gap-6">
-                            <div class="relative w-24 h-24 flex-shrink-0">
-                                <div
-                                    class="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover:scale-125 transition-transform duration-500">
-                                </div>
-                                <img src="{{ Str::startsWith($member->image, 'http') ? $member->image : Storage::url($member->image) }}"
-                                    class="w-full h-full rounded-full border-4 border-white shadow-sm relative z-10 group-hover:scale-105 transition-transform">
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold text-slate-900 font-display mb-1">{{ $member->name }}</h4>
-                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wide">{{ $member->designation }}</p>
-                            </div>
-                        </div>
-                        @endforeach
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
