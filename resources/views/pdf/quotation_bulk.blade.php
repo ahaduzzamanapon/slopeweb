@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Quotation - {{ $refId }}</title>
 <style>
-    @page { margin: 3cm 0cm 3.5cm 0cm; }
+    @page { margin: 3cm 0cm 1.5cm 0cm; }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px 2cm 40px; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#000; line-height:1.5; padding: 0 40px; }
 
     /* ── LETTERHEAD ─────────────────────────────── */
     .lh { width:100%; border-bottom:4px solid #1a3a8f; padding-bottom:8px; margin-bottom:16px; text-align:center; }
@@ -14,8 +14,8 @@
 
     /* ── FOOTER (fixed) ──────────────────────────── */
     .pg-footer {
-        position:fixed; bottom:0.8cm; left:0; right:0;
-        border-top:3px solid #1a3a8f; padding-top:4px;
+        position:fixed; bottom:0; left:0; right:0;
+        border-top:3px solid #1a3a8f; padding-top:4px; padding-bottom:4px;
         font-size:9px; color:#333; text-align:center; background:#fff;
         z-index:1000;
     }
