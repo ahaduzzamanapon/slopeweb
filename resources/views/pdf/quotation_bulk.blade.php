@@ -36,7 +36,7 @@
     .sig .sd { font-size:11px; line-height:1.7; }
 
     /* ── PRODUCT TABLE ───────────────────────────── */
-    .ptbl { width:100%; border-collapse:collapse; }
+    .ptbl { width:100%; border-collapse:collapse; border-bottom:2px solid #555; }
     .ptbl th { background:#1a3a8f; color:#fff; border:1px solid #333; padding:6px 8px; font-size:12px; text-align:center; }
     .ptbl td { border-left:1px solid #555; border-right:1px solid #555; border-top:none; border-bottom:none; padding:6px 8px; vertical-align:top; }
     .ptbl .sn { text-align:center; font-weight:bold; width:38px; }

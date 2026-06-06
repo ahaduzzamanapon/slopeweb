@@ -67,6 +67,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            border-bottom: 2px solid #000;
         }
 
         .table th {
