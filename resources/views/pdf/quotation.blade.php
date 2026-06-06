@@ -195,6 +195,11 @@
                 <th>Remark</th>
             </tr>
         </thead>
+        <tfoot>
+            <tr style="height:2px;">
+                <td colspan="4" style="background:#000; padding:0; border:none; height:2px; font-size:0; line-height:0;"></td>
+            </tr>
+        </tfoot>
         <tbody>
             <tr>
                 <td align="center">01</td>
@@ -279,7 +284,6 @@
             @endif
         </tbody>
     </table>
-    <div style="background:#000; height:1px; width:100%; font-size:0; line-height:0;"></div>
 
     <div class="content-section">
         <p><strong>Terms and condition</strong></p>
